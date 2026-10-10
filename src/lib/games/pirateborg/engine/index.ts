@@ -1,6 +1,7 @@
-import { roll, rollOnEntries, rollStats, type StatRoll } from './roll';
+import { roll, rollOnEntries, rollDiceExpression, rollStats, type StatRoll } from './roll';
 import { registerAllTables } from './tables';
 import { classes, buildClassTable, type PirateClass } from '../data/classes';
+import { backgroundTable, type BackgroundEntry } from '../data/background';
 
 export type { StatRoll };
 
@@ -58,6 +59,14 @@ function rollDie(sides: number): number {
 function formatRoll(tableId: string): string {
 	const r = roll(tableId);
 	return r.subrolls.length ? `${r.result}: ${r.subrolls.map((x) => x.result).join(', ')}` : r.result;
+}
+
+/** Il Background è una sola riga d100: professione, dadi argento e oggetto. */
+function rollBackground(): BackgroundEntry {
+	const value = Math.floor(Math.random() * 100) + 1;
+	return (
+		backgroundTable.find((e) => value >= e.min && value <= e.max) ?? backgroundTable[0]
+	);
 }
 
 type TraitKey =
@@ -147,10 +156,12 @@ export function generatePirate(options: GenerateOptions = {}): PirateCharacter {
 	}
 
 	// 5. Background e dettagli.
+	const bg = rollBackground();
+	const silver = rollDiceExpression(bg.silver);
 	const background: PirateBackground = {
-		profession: formatRoll('background'),
-		silver: formatRoll('piecesOfEight'),
-		tie: formatRoll('backgroundTie'),
+		profession: bg.profession,
+		silver: `${silver} monete d'argento (${bg.silver})`,
+		tie: bg.item,
 		distinctiveFlaw: formatRoll('distinctiveFlaw'),
 		physicalPeculiarity: formatRoll('physicalPeculiarity'),
 		idiosyncrasy: formatRoll('idiosyncrasy'),

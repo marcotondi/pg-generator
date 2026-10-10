@@ -37,7 +37,7 @@ export const luxuryItems: TableEntry[] = [
 	{ min: 1, max: 1, result: 'Bussola' },
 	{ min: 2, max: 2, result: 'Cannocchiale' },
 	{ min: 3, max: 3, result: 'Canna da pesca' },
-	{ min: 4, max: 4, result: 'Antica reliquia (1 Reliquia Antica casuale)' },
+	{ min: 4, max: 4, result: 'Antica reliquia', subTable: 'reliquie' },
 	{ min: 5, max: 5, result: 'Bottiglia di rum pregiato' },
 	{ min: 6, max: 6, result: 'Vecchio orologio da taschino' },
 	{ min: 7, max: 7, result: 'Coperta e cuscino' },

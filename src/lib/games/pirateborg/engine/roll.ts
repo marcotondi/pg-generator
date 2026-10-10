@@ -73,6 +73,18 @@ export function rollMultiple(tableId: string, count: number): RollResult[] {
 	return results;
 }
 
+/** Risolve un'espressione tipo "2d6 × 10", "3d4", "1d12 × 10". */
+export function rollDiceExpression(expr: string): number {
+	const match = expr.match(/(\d+)\s*d\s*(\d+)\s*(?:[x×*]\s*(\d+))?/i);
+	if (!match) return 0;
+	const count = parseInt(match[1]);
+	const sides = parseInt(match[2]);
+	const multiplier = match[3] ? parseInt(match[3]) : 1;
+	let total = 0;
+	for (let i = 0; i < count; i++) total += rollDie(sides);
+	return total * multiplier;
+}
+
 /** Solo il modificatore: 3d6 secco → tabella, nessuno scarto di dadi. */
 export function rollStats(): StatRoll[] {
 	return attributeNames.map((name) => {

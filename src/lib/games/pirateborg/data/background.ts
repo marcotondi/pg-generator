@@ -1,28 +1,108 @@
 import type { TableEntry } from './equipment';
 
-// --- Segnaposto: in attesa dei valori definitivi ---
-
-export const backgroundTable: TableEntry[] = [];
-for (let i = 1; i <= 100; i++) {
-	backgroundTable.push({ min: i, max: i, result: `Professione #${i}` });
+/**
+ * I Passati: un solo tiro di d100 dà professione, dadi per l'argento e un oggetto/legame.
+ */
+export interface BackgroundEntry {
+	min: number;
+	max: number;
+	profession: string;
+	silver: string;
+	item: string;
 }
 
-export const backgroundTie: TableEntry[] = [];
-for (let i = 1; i <= 100; i++) {
-	backgroundTie.push({ min: i, max: i, result: `Legame #${i}` });
-}
+const bg = (
+	min: number,
+	max: number,
+	profession: string,
+	silver: string,
+	item: string
+): BackgroundEntry => ({ min, max, profession, silver, item });
 
-export const piecesOfEight: TableEntry[] = [];
-for (let i = 1; i <= 100; i++) {
-	piecesOfEight.push({ min: i, max: i, result: `${i} Pezzi da Otto` });
-}
+export const backgroundTable: BackgroundEntry[] = [
+	bg(1, 20, 'Marinaio', '2d6 × 10', 'un motivo per prendere il mare'),
+	bg(21, 21, 'Attore', '2d6 × 10', 'un copione o libro'),
+	bg(22, 22, 'Speziale/Apotecario', '2d6 × 10', 'un kit di guarigione'),
+	bg(23, 23, 'Artista', '2d6 × 10', 'materiale artistico'),
+	bg(24, 24, 'Assassino', '2d6 × 10', 'un pugnale'),
+	bg(25, 25, 'Bandito', '2d6 × 10', 'una clava'),
+	bg(26, 26, 'Oste/Ristoratore', '2d6 × 10', 'una fiaschetta di rum pregiato'),
+	bg(27, 27, 'Fabbro', '2d6 × 10', 'un set di lime e attrezzi'),
+	bg(28, 28, 'Nostromo', '2d6 × 10', "il rispetto di parte dell'equipaggio"),
+	bg(29, 29, "Uomo d'Affari", '3d6 × 10', 'un passato redditizio'),
+	bg(30, 30, 'Mozzo', '2d4 × 10', 'un piccolo giocattolo o cianfrusaglia'),
+	bg(31, 31, 'Capitano', '2d8 × 10', 'un cannocchiale'),
+	bg(32, 32, 'Ex Prigioniero', '2d4 × 10', 'la tua libertà'),
+	bg(33, 33, 'Naufrago', '2d4 × 10', "un ricordo dell'isola"),
+	bg(34, 34, 'Chef', '2d6 × 10', 'un libro di ricette'),
+	bg(35, 35, 'Cuoco di Bordo', '2d6 × 10', 'spezie pregiate da cucina'),
+	bg(36, 36, 'Artigiano', '2d6 × 10', 'un set di attrezzi'),
+	bg(37, 37, 'Criminale', '1d10 × 10', 'un grimaldello o un piede di porco'),
+	bg(38, 38, 'Cultista', '2d6 × 10', 'un libro di sacre scritture'),
+	bg(39, 39, 'Disertore', '2d4 × 10', 'una piccola taglia sulla testa'),
+	bg(40, 40, 'Dottore', '2d6 × 10', 'un kit medico'),
+	bg(41, 41, 'Esploratore', '2d6 × 10', 'una mappa con bussola'),
+	bg(42, 42, 'Contadino', '2d4 × 10', 'un motivo per lasciare la fattoria'),
+	bg(43, 43, 'Primo Ufficiale', '2d6 × 10', 'un amico leale'),
+	bg(44, 44, "Giocatore d'Azzardo", '1d12 × 10', 'un ingente debito'),
+	bg(45, 45, 'Profanatore di Tombe', '2d6 × 10', 'qualcosa preso da un cadavere'),
+	bg(46, 46, 'Guardia', '2d6 × 10', 'un occhio vigile per le malefatte'),
+	bg(47, 47, 'Artigliere', '2d6 × 10', 'grande abilità nel tiro'),
+	bg(48, 48, 'Cortigiana', '2d8 × 10', 'un ammiratore e la sifilide'),
+	bg(49, 49, 'Eretico', '2d4 × 10', "un'indole blasfema"),
+	bg(50, 50, 'Casalingo/a', '2d6 × 10', 'un caro affetto a casa'),
+	bg(51, 51, 'Cacciatore', '2d6 × 10', 'un coltello da caccia'),
+	bg(52, 52, 'Ex Servo', '2d4 × 10', 'qualcuno che ti sta cercando'),
+	bg(53, 53, 'Locandiere', '3d4 × 10', 'una piccola locanda da qualche parte'),
+	bg(54, 54, 'Proprietario Terriero', '3d6 × 10', 'una proprietà'),
+	bg(55, 55, 'Solitario', '2d6 × 10', 'un\u2019avversione per il prossimo'),
+	bg(56, 56, 'Cartografo', '2d6 × 10', 'strumenti da disegno mappe'),
+	bg(57, 57, 'Soldato di Marina', '2d6 × 10', 'una sciabola militare'),
+	bg(58, 58, 'Infermiere/Medico di Campo', '2d6 × 10', 'un kit medico'),
+	bg(59, 59, 'Mercante', '2d8 × 10', 'spiccate doti di negoziazione'),
+	bg(60, 60, 'Militare', '2d6 × 10', 'addestramento al combattimento'),
+	bg(61, 61, 'Missionario', '2d4 × 10', 'un simbolo sacro e scritture'),
+	bg(62, 62, 'Monaco', '2d6 × 10', 'un simbolo sacro e scritture'),
+	bg(63, 63, 'Musicista', '2d6 × 10', 'uno strumento musicale casuale'),
+	bg(64, 64, 'Disertore della Marina', '2d4 × 10', 'una taglia sulla testa'),
+	bg(65, 65, 'Navigatore', '2d6 × 10', 'una bussola'),
+	bg(66, 66, 'Nobile', '3d6 × 10', 'buone maniere'),
+	bg(67, 67, 'Nessuno/Senza Nome', '2d4 × 10', 'la ricerca di uno scopo'),
+	bg(68, 68, 'Infermiere', '2d6 × 10', 'un kit medico'),
+	bg(69, 69, 'Ufficiale', '2d8 × 10', 'una sciabola e addestramento militare'),
+	bg(70, 70, 'Orfano', '2d4 × 10', 'il desiderio di trovare nuovi genitori'),
+	bg(71, 71, 'Artista di Strada', '2d6 × 10', 'uno strumento musicale casuale'),
+	bg(72, 72, 'Filosofo', '2d6 × 10', "un libro e un'indole enigmatica"),
+	bg(73, 73, 'Pilota di Navi', '2d6 × 10', 'una bussola'),
+	bg(74, 74, 'Pirata', '2d6 × 10', 'una bottiglia di rum vuota'),
+	bg(75, 75, 'Politico', '2d6 × 10', "grande abilità nell'inganno"),
+	bg(76, 76, 'Sacerdote', '2d6 × 10', 'un simbolo sacro e scritture'),
+	bg(77, 77, 'Corsaro', '2d6 × 10', 'una lettera di corsa'),
+	bg(78, 78, 'Quartiermastro', '2d6 × 10', "il rispetto dell'equipaggio"),
+	bg(79, 79, 'Rifugiato', '2d4 × 10', 'un forte istinto di sopravvivenza'),
+	bg(80, 80, 'Seguace Religioso', '2d4 × 10', 'una profonda fede'),
+	bg(81, 81, 'Rivoluzionario', '2d6 × 10', 'piani audaci e qualche alleato'),
+	bg(82, 82, 'Presunto Stregone', '2d6 × 10', 'oscure e potenti conoscenze'),
+	bg(83, 83, 'Fuggiasco', '2d4 × 10', 'la ricerca di una nuova casa'),
+	bg(84, 84, 'Velaio', '2d6 × 10', 'grande abilità con le vele'),
+	bg(85, 85, 'Erudito/Studioso', '2d6 × 10', 'alcuni libri'),
+	bg(86, 86, 'Canaglia', '2d8 × 10', 'diversi nemici giurati'),
+	bg(87, 87, 'Vedetta/Esploratore', '2d6 × 10', 'sensi acuti e una mappa'),
+	bg(88, 88, 'Sciamano', '2d4 × 10', 'erbe e conoscenze mistiche'),
+	bg(89, 89, 'Carpentiere Navale', '2d6 × 10', 'abilità nella lavorazione del legno'),
+	bg(90, 90, 'Contrabbandiere', '2d6 × 10', 'una taglia sulla testa'),
+	bg(91, 91, 'Soldato', '2d6 × 10', 'una mente tattica'),
+	bg(92, 92, 'Spia', '2d6 × 10', 'un mantello scuro'),
+	bg(93, 93, 'Studente', '2d4 × 10', "forza di volontà nell'imparare"),
+	bg(94, 94, 'Chirurgo', '2d6 × 10', 'un kit medico'),
+	bg(95, 95, 'Ladro', '1d12 × 10', 'grimaldelli'),
+	bg(96, 96, 'Vagabondo', '2d4 × 10', 'uno zaino in cuoio'),
+	bg(97, 97, 'Vittima', '2d6 × 10', 'un passato tormentato dagli spettri'),
+	bg(98, 98, 'Guerriero', '2d4 × 10', 'un\u2019arma tradizionale della tua cultura'),
+	bg(99, 100, 'Baleniere', '2d6 × 10', 'un arpione')
+];
 
-export const preciousThings: TableEntry[] = [];
-for (let i = 1; i <= 100; i++) {
-	preciousThings.push({ min: i, max: i, result: `Cosa preziosa #${i} (vedi regolamento pag. 52)` });
-}
-
-// --- Tabelle popolate ---
+// --- Tabelle dei dettagli (d20) e sventure ---
 
 export const distinctiveFlaw: TableEntry[] = [
 	{ min: 1, max: 1, result: 'Ubriacone perso' },
@@ -120,3 +200,113 @@ export const misfortunes: TableEntry[] = [
 	{ min: 19, max: 19, result: 'Non hai alcun ricordo antecedente a pochi giorni fa.' },
 	{ min: 20, max: 20, result: "Sei già morto una volta, ma l'Inferno ti ha sputato indietro." }
 ];
+
+// --- Cose preziose (d100) ---
+
+const PRECIOUS: string[] = [
+	"Pelle d'animale",
+	"Perla d'ostrica",
+	"Medaglione d'argento",
+	'Conchiglia',
+	'Pipa scolpita nel legno',
+	"Pipa scolpita nell'osso",
+	'Piccola statuetta di giada',
+	"Antica moneta d'oro",
+	'Pezzo rovinato di una mappa del tesoro',
+	'Mappa di un luogo sconosciuto',
+	'Diario scritto da un antenato',
+	"Anello d'argento",
+	'Pezzo degli scacchi in avorio',
+	"Creatura marina scolpita nell'ossidiana",
+	'Prisma sferico',
+	'Vaso contenente una mano mozza',
+	'Collana di ossa e piume',
+	'Libro di sacre scritture',
+	'Romanzo amato da bambino',
+	'Bizzarro fazzoletto di seta',
+	"Sacchetto di denti d'animale",
+	'Vecchio coltello da filetto',
+	'Fossile di un pesce estinto',
+	'Pezzo di corallo colorato',
+	'Piccola nave in bottiglia',
+	'Lettera di una persona amata',
+	'Diario di un esploratore morto',
+	'Pietra scolpita con l\u2019immagine di una sirena',
+	'Fiala di acqua santa del clero del tuo paese natio',
+	'Resti di un piccolo calamaro conservato in vaso',
+	'Sali da cucina pregiati in un piccolo bauletto',
+	'Boccale ricavato da un corno',
+	'Vaso del miglior tabacco',
+	"Tagliacarte d'oro",
+	'Piccola civetta in bronzo',
+	'Collezione di conchiglie e sassi marini',
+	'Testamento di un parente recente che ti nomina unico erede',
+	'Disegno di una persona amata',
+	'Sacchetto di polvere bianca "magica"',
+	'Vecchia chiave arrugginita con una gemma blu che brilla al chiaro di luna',
+	'Bussola che non punta verso nord',
+	"Vaso d'argilla usato come urna cineraria",
+	'Prova schiacciante del crimine di un nemico (o di un caro)',
+	"Piccola campanella d'oro",
+	'Vecchia bottiglia di vino rosso pregiato',
+	'Vaso di polvere di medusa essiccata',
+	'Piuma multicolore',
+	'Collana ricevuta da una persona amata',
+	'Anello della misura sbagliata',
+	"Orecchino di diamante singolo",
+	'Benda per occhio in cuoio ben rifinita',
+	'Set di attrezzi da giardinaggio',
+	'Fiore essiccato',
+	"Teschio d'animale",
+	'Teschio umano',
+	"Gemma che brilla se immersa nell'acqua di mare",
+	'Osso o artiglio di dinosauro/mostro',
+	'Vaso di lucciole',
+	'Tomo rilegato in pelle in una lingua sconosciuta',
+	'Progetti per un nuovo tipo di nave',
+	'Punta di freccia scolpita',
+	'Tavoletta di pietra con pittogrammi o geroglifici antichi',
+	'Cubo perfetto di cristallo',
+	'Tatuaggio (d4: amore, vendetta, antenati, origine sconosciuta)',
+	"Bottiglia d'olio profumato",
+	'Catene o ferri spezzati',
+	'Pistola con un singolo colpo destinato a qualcuno di speciale',
+	'Bandiera di significato personale',
+	"Cannocchiale rotto con una mappa nascosta all'interno",
+	'Cima di corda intessuta a mano',
+	'Pedine da gioco scolpite',
+	'Set di rune di pietra',
+	'Ramoscello di un albero millenario',
+	'Cappio prelevato da un cadavere',
+	'Catena in ferro lunga 2 metri',
+	'4d10 cicatrici da frustate sulla schiena',
+	'Lunga cicatrice sul viso',
+	'Due gusci di noce di cocco',
+	'Veste, mantello o saio scuro',
+	'Barile di birra forte di sassafrasso',
+	'Mazzo di chiavi su un grande anello',
+	'Piccolo barilotto di valore (rum, polvere da sparo, ceneri)',
+	"Lente d'ingrandimento",
+	"Tappo di sughero conservato da un'occasione speciale",
+	'Palla di cannone',
+	'Mazzo di carte (mancano d4 carte, con d6 carte "extra")',
+	'Indumento appartenuto a qualcuno di speciale',
+	'Manifesto di taglia (d4: leggenda, nemico, persona amata, sconosciuto)',
+	'Parrucca sfarzosa',
+	'Lettera di grande importanza politica',
+	'Pelle di balena conciata o vaso di grasso',
+	'Uovo pietrificato',
+	'Zampa di scimmia con 1 dito teso',
+	'Poesia imparata a memoria che suona come indicazioni di una mappa',
+	'Medaglione che potrebbe essere la punta di uno scettro',
+	'Talismano a forma di serpente',
+	'Fiala di vetro con sangue scuro',
+	'Frammento di cristallo'
+];
+
+export const preciousThings: TableEntry[] = PRECIOUS.map((result, i) => ({
+	min: i + 1,
+	max: i + 1,
+	result
+}));
+preciousThings.push({ min: 99, max: 100, result: 'Un oggetto leggendario o un documento decisivo' });
