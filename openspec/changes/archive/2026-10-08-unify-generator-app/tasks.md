@@ -55,10 +55,10 @@
 
 ## 7. Persistenza e lista unificata
 
-- [ ] 7.1 Adattare il salvataggio al formato `{ version, game, data }` per entrambi i moduli
-- [ ] 7.2 Costruire il menu di richiamo che elenca i personaggi di entrambi i giochi con indicazione del gioco
-- [ ] 7.3 Gestire il caricamento di un personaggio aprendolo nella pagina gioco corretta
-- [ ] 7.4 Gestire la versione sconosciuta senza corrompere l'elenco
+- [x] 7.1 Adattare il salvataggio al formato `{ version, game, data }` per entrambi i moduli
+- [x] 7.2 Costruire il menu di richiamo che elenca i personaggi di entrambi i giochi con indicazione del gioco
+- [x] 7.3 Gestire il caricamento di un personaggio aprendolo nella pagina gioco corretta
+- [x] 7.4 Gestire la versione sconosciuta senza corrompere l'elenco
 
 ## 8. Routing e landing
 
@@ -75,8 +75,8 @@
 
 ## 10. Pulizia e deploy
 
-- [ ] 10.1 Rimuovere i sottoprogetti `pirateborg-generator/` e `ronin-character-generator/`
-- [ ] 10.2 Configurare il progetto Cloudflare Pages (root `pg-generator/`, build `npm run build`, output `build/`)
-- [ ] 10.3 `npm run check` e `npm run build` puliti
-- [ ] 10.4 Verifica end-to-end: landing → generazione → salva → carica → stampa, per entrambi i giochi
-- [ ] 10.5 Archiviare questo change OpenSpec
+- [x] 10.1 Rimuovere i sottoprogetti `pirateborg-generator/` e `ronin-character-generator/`
+- [x] 10.2 Configurare il progetto Cloudflare Pages (root `pg-generator/`, build `npm run build`, output `build/`)
+- [x] 10.3 `npm run check` e `npm run build` puliti
+- [x] 10.4 Verifica end-to-end: landing → generazione → salva → carica → stampa, per entrambi i giochi
+- [x] 10.5 Archiviare questo change OpenSpec
