@@ -91,13 +91,6 @@ Il motore SHALL permettere di includere o escludere le classi opzionali. Quando 
 - **QUANDO** la generazione esclude le classi opzionali
 - **ALLORA** la tabella classi DEVE contenere solo le classi di base
 
-### Requirement: I contenuti provvisori SHALL essere segnaposto espliciti
-Dove i dati definitivi non sono disponibili (tabelle d100, nomi) il motore SHALL usare tabelle segnaposto strutturate il cui risultato contiene un riferimento numerico esplicito (es. "Professione #42"), senza presentarsi come contenuto definitivo.
-
-#### Scenario: Segnaposto riconoscibile
-- **QUANDO** viene tirata una tabella segnaposto
-- **ALLORA** il risultato DEVE contenere un riferimento numerico esplicito al posto del contenuto definitivo
-
 ### Requirement: La generazione SHALL NOT produrre campi mancanti
 Il motore SHALL valorizzare tutti i campi previsti dal modello del personaggio; nessun campo SHALL risultare vuoto o non risolto.
 
