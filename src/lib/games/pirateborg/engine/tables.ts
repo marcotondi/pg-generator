@@ -16,7 +16,13 @@ import {
 	preciousThings
 } from '$lib/games/pirateborg/data/background';
 import { reliquie } from '$lib/games/pirateborg/data/relics';
-import { names } from '$lib/games/pirateborg/data/names';
+import {
+	firstNames,
+	secondNames,
+	thirdNames,
+	nickPrefixes,
+	nickSuffixes
+} from '$lib/games/pirateborg/data/names';
 import {
 	classiAggiuntive,
 	mutantiAcquatici,
@@ -39,7 +45,11 @@ export function registerAllTables(): void {
 	registerTable('misfortunes', misfortunes);
 	registerTable('preciousThings', preciousThings);
 	registerTable('reliquie', reliquie);
-	registerTable('names', names);
+	registerTable('nomi1', firstNames);
+	registerTable('nomi2', secondNames);
+	registerTable('nomi3', thirdNames);
+	registerTable('prefissi', nickPrefixes);
+	registerTable('soprannomi', nickSuffixes);
 	registerTable('classi_aggiuntive', classiAggiuntive);
 	registerTable('mutanti_acquatici', mutantiAcquatici);
 	registerTable('animali_senzienti', animaliSenzienti);

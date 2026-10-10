@@ -69,56 +69,41 @@ function rollBackground(): BackgroundEntry {
 	);
 }
 
-type TraitKey =
-	| 'specialityTable'
-	| 'abilityTable'
-	| 'styleTable'
-	| 'prayerTable'
-	| 'spellTable'
-	| 'tormentTable'
-	| 'tallTaleTable';
-
-const TRAIT_TABLES: { key: TraitKey; label: string }[] = [
-	{ key: 'specialityTable', label: 'Specialità' },
-	{ key: 'abilityTable', label: 'Abilità' },
-	{ key: 'styleTable', label: 'Stile' },
-	{ key: 'prayerTable', label: 'Preghiera' },
-	{ key: 'spellTable', label: 'Incantesimo' },
-	{ key: 'tormentTable', label: 'Tormento' },
-	{ key: 'tallTaleTable', label: 'Frottola' }
-];
-
 function describe(result: { result: string; subrolls: { result: string }[] }): string {
 	return result.subrolls.length
 		? `${result.result}: ${result.subrolls.map((s) => s.result).join(', ')}`
 		: result.result;
 }
 
-/** Tratto di classe: la prima tabella di tratto presente sulla classe. */
+/** Tratto di classe: la tabella di tratto definita sulla classe. */
 function rollClassTrait(cls: PirateClass): ClassTrait | undefined {
-	for (const { key, label } of TRAIT_TABLES) {
-		const table = cls[key];
-		if (Array.isArray(table) && table.length > 0) {
-			return { label, value: describe(rollOnEntries(table)) };
-		}
-	}
-	return undefined;
+	if (!cls.trait || cls.trait.entries.length === 0) return undefined;
+	return { label: cls.trait.label, value: describe(rollOnEntries(cls.trait.entries)) };
 }
 
-/** Arma a cascata: tabella di classe → arma fissa → tabella armi. */
+/** Arma: arma fissa di classe, altrimenti tabella armi. Il moschetto si aggiunge. */
 function rollWeapons(cls: PirateClass | null): string[] {
 	const weapons: string[] = [];
-	if (cls?.weaponTable?.length) {
-		weapons.push(describe(rollOnEntries(cls.weaponTable)));
-	} else if (cls?.weapon) {
+	if (cls?.weapon) {
 		weapons.push(cls.weapon);
 	} else {
 		weapons.push(formatRoll('weapons'));
 	}
 	if (cls?.hasMusket) {
-		weapons.push('Moschetto (2d6, ricarica 2 azioni, gittata 45m)');
+		weapons.push('Moschetto (2d6, ricarica 2 azioni, gittata 45 m, munizioni 10 + Presenza)');
 	}
 	return weapons;
+}
+
+/** Nome rapido d12 su tre colonne, oppure soprannome d66 prefisso + titolo. */
+function composeName(): string {
+	const first = formatRoll('nomi1');
+	const second = formatRoll('nomi2');
+	const nickname =
+		Math.random() < 0.5
+			? formatRoll('nomi3')
+			: `${formatRoll('prefissi')} ${formatRoll('soprannomi')}`;
+	return `${first} ${second} "${nickname}"`;
 }
 
 export function generatePirate(options: GenerateOptions = {}): PirateCharacter {
@@ -170,7 +155,7 @@ export function generatePirate(options: GenerateOptions = {}): PirateCharacter {
 	};
 
 	return {
-		name: formatRoll('names'),
+		name: composeName(),
 		container: formatRoll('container'),
 		economicItem: formatRoll('commonItems'),
 		luxuryItem: formatRoll('luxuryItems'),
