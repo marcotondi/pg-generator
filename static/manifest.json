@@ -4,8 +4,8 @@
 	"description": "Generatore di schede personaggio per Rōnin e PirateBorg",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#131313",
-	"theme_color": "#131313",
+	"background_color": "#242220",
+	"theme_color": "#242220",
 	"orientation": "portrait",
 	"lang": "it",
 	"icons": [

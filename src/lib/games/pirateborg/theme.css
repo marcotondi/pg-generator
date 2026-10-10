@@ -1,24 +1,27 @@
-/* Tema PirateBorg — Cursed Gold & Iron: giallo elettrico su nero, angoli 0. */
+/* Tema PirateBorg — stampa/nautico: blu-grigio, serif da libro. */
 .theme-pirateborg {
-	--color-bg: #131313;
-	--color-bg-alt: #1b1c1c;
-	--color-surface: #1f2020;
-	--color-surface-alt: #2a2a2a;
-	--color-text: #e4e2e1;
-	--color-text-muted: #cac8aa;
-	--color-text-dim: #939277;
-	--color-accent: #cdcd00;
-	--color-accent-dim: #686800;
-	--color-accent-bright: #eaea00;
-	--color-danger: #ffb4ab;
-	--color-border: #484831;
+	--color-bg: #242220;
+	--color-bg-alt: #2c2a28;
+	--color-surface: #1d2833;
+	--color-surface-alt: #26323f;
+	--color-text: #e6ebef;
+	--color-text-muted: #a7b4c0;
+	--color-text-dim: #7c8a97;
+	--color-accent: #8fa6b8;
+	--color-accent-dim: #46596a;
+	--color-accent-bright: #aec4d6;
+	--color-danger: #c47a6b;
+	--color-border: #2f3d4b;
 
-	--font-heading: 'Anton', 'Impact', sans-serif;
-	--font-body: 'Work Sans', 'Arial', sans-serif;
-	--font-mono: 'JetBrains Mono', 'Consolas', monospace;
+	--font-heading: 'Almendra SC', serif;
+	--font-body: 'EB Garamond', Georgia, serif;
+	--font-mono: 'Courier Prime', 'Courier New', monospace;
 	--font-special: var(--font-body);
 
 	--radius-sm: 0px;
 	--radius-md: 0px;
 	--radius-lg: 0px;
+
+	--hero-rotate: 0deg;
+	--hero-opacity: 0.85;
 }

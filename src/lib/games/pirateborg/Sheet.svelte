@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SheetFrame from '$lib/core/components/SheetFrame.svelte';
 	import StatBlock from '$lib/core/components/StatBlock.svelte';
 	import SectionHeading from '$lib/core/components/SectionHeading.svelte';
 	import ItemList from '$lib/core/components/ItemList.svelte';
@@ -9,7 +8,12 @@
 	let { character }: { character: PirateCharacter } = $props();
 </script>
 
-<SheetFrame name={character.name} classLabel={character.classData?.name || '—'}>
+<div class="sheet pb-sheet">
+	<div class="pb-header">
+		<h2 class="pb-name">{character.name || '—'}</h2>
+		<p class="pb-class">{character.classData?.name || '—'}</p>
+	</div>
+
 	<div class="stats-row">
 		{#each character.attributes as attr}
 			<StatBlock label={attr.name.slice(0, 3)} value={attr.value} mod={attr.mod} />
@@ -60,9 +64,32 @@
 			</ItemList>
 		</div>
 	</div>
-</SheetFrame>
+</div>
 
 <style>
+	.pb-sheet {
+		border: none;
+		padding: 0;
+	}
+	.pb-header {
+		text-align: center;
+		margin-bottom: var(--space-lg);
+	}
+	.pb-name {
+		font-family: var(--font-heading);
+		font-size: 2rem;
+		text-transform: uppercase;
+		color: var(--color-accent);
+		margin: 0;
+		letter-spacing: 0.02em;
+		line-height: 1.1;
+	}
+	.pb-class {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		color: var(--color-text-muted);
+		margin: var(--space-sm) 0 0;
+	}
 	.stats-row {
 		display: flex;
 		justify-content: space-between;

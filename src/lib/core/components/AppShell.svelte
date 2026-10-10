@@ -6,27 +6,33 @@
 	let {
 		meta,
 		menu,
+		showTitle = true,
 		children
 	}: {
 		meta: GameMeta;
 		menu?: Snippet;
+		showTitle?: boolean;
 		children: Snippet;
 	} = $props();
 </script>
 
 <div class="app theme-{meta.id}">
 	<div class="app-inner">
-		<header class="app-header">
+		<header class="app-header" class:compact={!showTitle}>
 			<div class="header-row">
 				{#if menu}
 					{@render menu()}
 				{/if}
-				{#if meta.logo}
-					<img src={meta.logo} alt="" class="header-logo" />
+				{#if showTitle}
+					{#if meta.logo}
+						<img src={meta.logo} alt="" class="header-logo" />
+					{/if}
+					<h1 class="app-title">{meta.title}</h1>
 				{/if}
-				<h1 class="app-title">{meta.title}</h1>
 			</div>
-			<p class="app-subtitle">{meta.subtitle}</p>
+			{#if showTitle}
+				<p class="app-subtitle">{meta.subtitle}</p>
+			{/if}
 		</header>
 
 		<main class="app-main">
@@ -50,6 +56,7 @@
 	.app {
 		background: var(--color-bg);
 		color: var(--color-text);
+		font-family: var(--font-body);
 		min-height: 100dvh;
 		width: 100%;
 	}
@@ -65,6 +72,11 @@
 		padding: var(--space-md) 0;
 		border-bottom: 1px solid var(--color-accent);
 		margin-bottom: var(--space-lg);
+	}
+	.app-header.compact {
+		padding: var(--space-xs) 0;
+		border-bottom: none;
+		margin-bottom: 0;
 	}
 	.header-row {
 		display: flex;
@@ -125,7 +137,7 @@
 		width: 15vw;
 		height: auto;
 		object-fit: contain;
-		transform: rotate(25deg);
+		transform: rotate(var(--hero-rotate));
 		opacity: var(--hero-opacity);
 		pointer-events: none;
 		z-index: 0;

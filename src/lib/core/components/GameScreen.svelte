@@ -12,6 +12,7 @@
 		generate,
 		save,
 		controls,
+		header,
 		sheet
 	}: {
 		meta: GameMeta;
@@ -19,6 +20,7 @@
 		generate: () => void;
 		save: () => void;
 		controls?: Snippet;
+		header?: Snippet;
 		sheet: Snippet;
 	} = $props();
 
@@ -28,11 +30,12 @@
 	}
 </script>
 
-<AppShell {meta}>
+<AppShell {meta} showTitle={!header}>
 	{#snippet menu()}
 		<SavedMenu currentGame={meta.id} />
 	{/snippet}
 
+	{@render header?.()}
 	{@render controls?.()}
 
 	<div class="generate-section">

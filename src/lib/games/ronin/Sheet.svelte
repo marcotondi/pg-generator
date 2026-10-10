@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SheetFrame from '$lib/core/components/SheetFrame.svelte';
 	import SectionHeading from '$lib/core/components/SectionHeading.svelte';
 	import ItemList from '$lib/core/components/ItemList.svelte';
 	import Divider from '$lib/core/components/Divider.svelte';
@@ -9,14 +8,14 @@
 	let { character }: { character: Character } = $props();
 
 	const attributes: { label: string; value: number }[] = $derived([
-		{ label: 'Prontezza', value: character.abilities.swiftness },
-		{ label: 'Spirito', value: character.abilities.spirit },
-		{ label: 'Vigore', value: character.abilities.vigor },
-		{ label: 'Resilienza', value: character.abilities.resilience }
+		{ label: it('page.swiftness'), value: character.abilities.swiftness },
+		{ label: it('page.spirit'), value: character.abilities.spirit },
+		{ label: it('page.vigor'), value: character.abilities.vigor },
+		{ label: it('page.resilience'), value: character.abilities.resilience }
 	]);
 </script>
 
-<SheetFrame>
+<div class="sheet ronin-sheet">
 	<div class="ronin-header">
 		<p class="muted">Sei</p>
 		<h2 class="name">{character.firstName.toUpperCase()} {character.lastName.toUpperCase()}</h2>
@@ -122,9 +121,13 @@
 			{/if}
 		</div>
 	{/if}
-</SheetFrame>
+</div>
 
 <style>
+	.ronin-sheet {
+		border: none;
+		padding: 0;
+	}
 	.ronin-header {
 		text-align: center;
 		margin-bottom: var(--space-lg);
