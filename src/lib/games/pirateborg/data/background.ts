@@ -1,5 +1,7 @@
 import type { TableEntry } from './equipment';
 
+// --- Segnaposto: in attesa dei valori definitivi ---
+
 export const backgroundTable: TableEntry[] = [];
 for (let i = 1; i <= 100; i++) {
 	backgroundTable.push({ min: i, max: i, result: `Professione #${i}` });
@@ -15,99 +17,106 @@ for (let i = 1; i <= 100; i++) {
 	piecesOfEight.push({ min: i, max: i, result: `${i} Pezzi da Otto` });
 }
 
-export const distinctiveFlaw: TableEntry[] = [
-	{ min: 1, max: 1, result: 'Puzza come una sentina' },
-	{ min: 2, max: 2, result: 'Mente una gamba' },
-	{ min: 3, max: 3, result: 'Schiaffeggia la gente quando è eccitato' },
-	{ min: 4, max: 4, result: 'Parla sempre in terza persona' },
-	{ min: 5, max: 5, result: 'Non si fida della terraferma' },
-	{ min: 6, max: 6, result: 'Colleziona denti' },
-	{ min: 7, max: 7, result: 'Ha paura del buio' },
-	{ min: 8, max: 8, result: 'Non sa nuotare' },
-	{ min: 9, max: 9, result: 'Beve rum a colazione' },
-	{ min: 10, max: 10, result: 'Parla con gli oggetti inanimati' },
-	{ min: 11, max: 11, result: 'Deve contare tutto' },
-	{ min: 12, max: 12, result: "Mai visto un'isola che non gli piaccia" },
-	{ min: 13, max: 13, result: 'Lascia briciove ovunque' },
-	{ min: 14, max: 14, result: 'Crede alle sirene (forse ha ragione)' },
-	{ min: 15, max: 15, result: 'Rifiuta di togliersi il cappello' },
-	{ min: 16, max: 16, result: 'Dorme con un occhio aperto' },
-	{ min: 17, max: 17, result: 'Giura in modo creativo' },
-	{ min: 18, max: 18, result: 'Ha un tesoro sepolto... da qualche parte' },
-	{ min: 19, max: 19, result: 'Non conosce il suo vero nome' },
-	{ min: 20, max: 20, result: 'Porta sfortuna (o così dice)' },
-];
-
-export const physicalPeculiarity: TableEntry[] = [
-	{ min: 1, max: 1, result: 'Casco di vetro' },
-	{ min: 2, max: 2, result: "Denti d'oro" },
-	{ min: 3, max: 3, result: 'Occhio di vetro' },
-	{ min: 4, max: 4, result: 'Gamba di legno' },
-	{ min: 5, max: 5, result: 'Gancio al posto della mano' },
-	{ min: 6, max: 6, result: 'Cicatrice sulla faccia' },
-	{ min: 7, max: 7, result: 'Tatuaggi su tutto il corpo' },
-	{ min: 8, max: 8, result: "Senza un orecchio" },
-	{ min: 9, max: 9, result: 'Capelli colorati stranamente' },
-	{ min: 10, max: 10, result: 'Sopracciglia unite' },
-	{ min: 11, max: 11, result: 'Naso enorme' },
-	{ min: 12, max: 12, result: 'Labbro leporino' },
-	{ min: 13, max: 13, result: 'Dita palmate' },
-	{ min: 14, max: 14, result: 'Segno di nascita misterioso' },
-	{ min: 15, max: 15, result: 'Calvo ma con barba folta' },
-	{ min: 16, max: 16, result: 'Bassa statura' },
-	{ min: 17, max: 17, result: 'Gigantesco' },
-	{ min: 18, max: 18, result: 'Zoppica leggermente' },
-	{ min: 19, max: 19, result: 'Collo tatuato' },
-	{ min: 20, max: 20, result: 'Senza denti' },
-];
-
-export const idiosyncrasy: TableEntry[] = [
-	{ min: 1, max: 1, result: 'Fischietta sempre' },
-	{ min: 2, max: 2, result: 'Non usa parole straniere' },
-	{ min: 3, max: 3, result: 'Tocca il legno per fortuna' },
-	{ min: 4, max: 4, result: 'Non si siede mai dando le spalle alla porta' },
-	{ min: 5, max: 5, result: 'Mangia solo cibo che ha ucciso personalmente' },
-	{ min: 6, max: 6, result: 'Bacia il suo medaglione prima di ogni pasto' },
-	{ min: 7, max: 7, result: 'Conta i passi' },
-	{ min: 8, max: 8, result: 'Non calpesta le crepe' },
-	{ min: 9, max: 9, result: 'Raccoglie conchiglie' },
-	{ min: 10, max: 10, result: 'Saluta ogni gabbiano' },
-	{ min: 11, max: 11, result: 'Scrive poesie' },
-	{ min: 12, max: 12, result: 'Parla da solo' },
-	{ min: 13, max: 13, result: 'Deve sedersi in un posto specifico' },
-	{ min: 14, max: 14, result: 'Non sopporta il formaggio' },
-	{ min: 15, max: 15, result: 'Colleziona bottoni' },
-	{ min: 16, max: 16, result: 'Accarezza sempre la sua arma' },
-	{ min: 17, max: 17, result: 'Canta canzoni da lavoro' },
-	{ min: 18, max: 18, result: 'Si spoglia prima di dormire ovunque' },
-	{ min: 19, max: 19, result: 'Lancia monete per decisioni' },
-	{ min: 20, max: 20, result: 'Non dice mai grazie' },
-];
-
-export const misfortunes: TableEntry[] = [
-	{ min: 1, max: 1, result: "Nave affondata, sei l'unico superstite" },
-	{ min: 2, max: 2, result: "Tradito dal primo ufficiale" },
-	{ min: 3, max: 3, result: 'Maledetto da uno stregone' },
-	{ min: 4, max: 4, result: 'Hai perso tutto al gioco' },
-	{ min: 5, max: 5, result: 'Il tuo tesoro è stato rubato' },
-	{ min: 6, max: 6, result: 'Sei stato venduto come schiavo' },
-	{ min: 7, max: 7, result: 'Hai ucciso un uomo importante' },
-	{ min: 8, max: 8, result: 'Hai una taglia sulla testa' },
-	{ min: 9, max: 9, result: 'Hai perso un arto' },
-	{ min: 10, max: 10, result: 'La tua ciurma si è ammutinata' },
-	{ min: 11, max: 11, result: "Sei stato lasciato su un'isola deserta" },
-	{ min: 12, max: 12, result: 'Hai contratto una malattia strana' },
-	{ min: 13, max: 13, result: 'Il tuo vascello è stato requisito' },
-	{ min: 14, max: 14, result: 'Hai un nemico giurato' },
-	{ min: 15, max: 15, result: 'Hai perso la memoria' },
-	{ min: 16, max: 16, result: 'Sei stato sbarcato in disgrazia' },
-	{ min: 17, max: 17, result: 'Hai ucciso un ufficiale della corona' },
-	{ min: 18, max: 18, result: 'I tuoi familiari sono stati uccisi' },
-	{ min: 19, max: 19, result: 'Hai un debito con il diavolo' },
-	{ min: 20, max: 20, result: 'Hai perso la tua anima in una scommessa' },
-];
-
 export const preciousThings: TableEntry[] = [];
 for (let i = 1; i <= 100; i++) {
 	preciousThings.push({ min: i, max: i, result: `Cosa preziosa #${i} (vedi regolamento pag. 52)` });
 }
+
+// --- Tabelle popolate ---
+
+export const distinctiveFlaw: TableEntry[] = [
+	{ min: 1, max: 1, result: 'Ubriacone perso' },
+	{ min: 2, max: 2, result: 'Testardo' },
+	{ min: 3, max: 3, result: 'Allegria sardonica' },
+	{ min: 4, max: 4, result: 'Decisamente troppo rumoroso' },
+	{ min: 5, max: 5, result: 'Stupido' },
+	{ min: 6, max: 6, result: 'Codardo' },
+	{ min: 7, max: 7, result: 'Arrogante' },
+	{ min: 8, max: 8, result: 'Lievemente squilibrato' },
+	{ min: 9, max: 9, result: 'Aggressivo' },
+	{ min: 10, max: 10, result: 'Ansioso' },
+	{ min: 11, max: 11, result: 'Imbroglione' },
+	{ min: 12, max: 12, result: 'Egoista' },
+	{ min: 13, max: 13, result: 'Pigro' },
+	{ min: 14, max: 14, result: 'Edonista' },
+	{ min: 15, max: 15, result: 'Impulsivo' },
+	{ min: 16, max: 16, result: 'Ostentatore' },
+	{ min: 17, max: 17, result: 'Paranoico' },
+	{ min: 18, max: 18, result: 'Pretenzioso' },
+	{ min: 19, max: 19, result: 'Sadico' },
+	{ min: 20, max: 20, result: 'Sleale' }
+];
+
+export const physicalPeculiarity: TableEntry[] = [
+	{ min: 1, max: 1, result: 'Maledetto (parte scheletro, spettro, acqua, fiamme o corallo)' },
+	{ min: 2, max: 2, result: 'Orbo (manca un occhio)' },
+	{ min: 3, max: 3, result: 'Capelli rasta o arruffati' },
+	{ min: 4, max: 4, result: 'Gamba di legno o gruccia' },
+	{ min: 5, max: 5, result: 'Uncino o chela' },
+	{ min: 6, max: 6, result: 'Senza un orecchio' },
+	{ min: 7, max: 7, result: 'Tatuatissimo' },
+	{ min: 8, max: 8, result: 'Sguardo fisso (non sbatte mai le palpebre)' },
+	{ min: 9, max: 9, result: 'Denti marci o spezzati' },
+	{ min: 10, max: 10, result: 'Tic nervoso (specialmente il dito sul grilletto)' },
+	{ min: 11, max: 11, result: 'Scorbuto grave (gengive sanguinanti)' },
+	{ min: 12, max: 12, result: 'Infestato (parassiti e insetti)' },
+	{ min: 13, max: 13, result: 'Cicatrice profonda sul viso' },
+	{ min: 14, max: 14, result: 'Orrendamente brutto' },
+	{ min: 15, max: 15, result: 'Corpulento (stazza imponente)' },
+	{ min: 16, max: 16, result: 'In cancrena' },
+	{ min: 17, max: 17, result: 'Puzza di sentina' },
+	{ min: 18, max: 18, result: 'Contagioso (portatore di qualche piaga)' },
+	{ min: 19, max: 19, result: 'Emaciato (magro e fragile)' },
+	{ min: 20, max: 20, result: 'Troppo bello (scatena gelosia)' }
+];
+
+export const idiosyncrasy: TableEntry[] = [
+	{ min: 1, max: 1, result: 'Fumi continuamente e tossisci ancora di più' },
+	{ min: 2, max: 2, result: 'Alcolista "funzionante"' },
+	{ min: 3, max: 3, result: 'Scommetti su qualsiasi cosa' },
+	{ min: 4, max: 4, result: 'Conti continuamente le cose attorno a te' },
+	{ min: 5, max: 5, result: 'I topi sono il tuo piatto preferito' },
+	{ min: 6, max: 6, result: 'Conosci ogni leggenda marinaresca e pretendi che tutti lo sappiano' },
+	{ min: 7, max: 7, result: 'Terrore superstizioso dei numeri primi maggiori di 3 (5, 7, 11, 13, 17 sul d20)' },
+	{ min: 8, max: 8, result: 'Brontolone omicida quando hai fame' },
+	{ min: 9, max: 9, result: 'Procrastinatore cronico' },
+	{ min: 10, max: 10, result: 'Insonne volontario: dormire è per i morti' },
+	{ min: 11, max: 11, result: 'Preferisci sparare prima e non fare domande' },
+	{ min: 12, max: 12, result: 'Eccessivamente e fastidiosamente religioso' },
+	{ min: 13, max: 13, result: 'Collezioni qualcosa e parli con la tua collezione' },
+	{ min: 14, max: 14, result: 'Cerchi di ingannare i compagni solo per divertimento' },
+	{ min: 15, max: 15, result: 'Perché comprare quando puoi rubare?' },
+	{ min: 16, max: 16, result: 'Parli da solo quando sei solo' },
+	{ min: 17, max: 17, result: 'Ti piace segretamente il sapore della carne umana' },
+	{ min: 18, max: 18, result: 'Dici di "conoscere la strada" ma ti perdi continuamente' },
+	{ min: 19, max: 19, result: 'Dai la colpa a chiunque tranne che a te stesso' },
+	{ min: 20, max: 20, result: 'Estremamente ossessivo nei compiti e nelle relazioni' }
+];
+
+export const ammutinamento: TableEntry[] = [
+	{ min: 1, max: 1, result: 'Ammutinato fallito' },
+	{ min: 2, max: 2, result: 'Ammutinato con successo' }
+];
+
+export const misfortunes: TableEntry[] = [
+	{ min: 1, max: 1, result: 'I tuoi cari sono stati bruciati vivi. La vendetta è il tuo unico scopo.' },
+	{ min: 2, max: 2, result: 'Sei un pirata ricercato: ti aspetta il patibolo se vieni catturato.' },
+	{ min: 3, max: 3, result: 'Hai tradito i tuoi ex compagni di ciurma e ora ti danno la caccia.' },
+	{ min: 4, max: 4, result: "Abbandonato su un'isola deserta troppo a lungo: le voci nella tua testa sono reali." },
+	{ min: 5, max: 5, result: 'Hai rubato una nave. Il proprietario vuole soldi o la tua testa.' },
+	{ min: 6, max: 6, result: 'Sei fuggito dalla prigionia e non ci tornerai mai più vivo.' },
+	{ min: 7, max: 7, result: 'Un parente stretto è diventato il tuo peggior nemico.' },
+	{ min: 8, max: 8, result: 'Le ultime tre navi su cui hai prestato servizio sono tutte affondate.' },
+	{ min: 9, max: 9, result: 'La tua vecchia ciurma è stata sterminata da non morti, lasciandoti vivo di proposito.' },
+	{ min: 10, max: 10, result: 'Capi politici tengono in ostaggio le persone che ami.' },
+	{ min: 11, max: 11, result: 'Uno spirito non morto che detesti ti possiede regolarmente.' },
+	{ min: 12, max: 12, result: 'Hai fatto un torto grave a un famigerato Signore dei Pirati.' },
+	{ min: 13, max: 13, result: 'Sei sfuggito per un pelo ai cannibali, ma quell\'odore non ti abbandonerà mai.' },
+	{ min: 14, max: 14, result: 'Li hai massacrati tutti... come animali.' },
+	{ min: 15, max: 15, result: 'Unico misterioso sopravvissuto di una spedizione al tesoro andata a monte.' },
+	{ min: 16, max: 16, result: 'Ammutinato', subTable: 'ammutinamento' },
+	{ min: 17, max: 17, result: 'Un fantasma silenzioso ti perseguita: è sempre lì, ma solo tu puoi vederlo.' },
+	{ min: 18, max: 18, result: 'Hai disertato dalla marina militare, ma non sai chi lo sappia con certezza.' },
+	{ min: 19, max: 19, result: 'Non hai alcun ricordo antecedente a pochi giorni fa.' },
+	{ min: 20, max: 20, result: "Sei già morto una volta, ma l'Inferno ti ha sputato indietro." }
+];

@@ -14,6 +14,7 @@ import {
 	distinctiveFlaw,
 	physicalPeculiarity,
 	idiosyncrasy,
+	ammutinamento,
 	misfortunes,
 	preciousThings
 } from '$lib/games/pirateborg/data/background';
@@ -35,6 +36,7 @@ export function registerAllTables(): void {
 	registerTable('distinctiveFlaw', distinctiveFlaw);
 	registerTable('physicalPeculiarity', physicalPeculiarity);
 	registerTable('idiosyncrasy', idiosyncrasy);
+	registerTable('ammutinamento', ammutinamento);
 	registerTable('misfortunes', misfortunes);
 	registerTable('preciousThings', preciousThings);
 	registerTable('names', names);
