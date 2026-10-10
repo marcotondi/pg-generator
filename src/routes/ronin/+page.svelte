@@ -1,20 +1,30 @@
 <script lang="ts">
 	import GameScreen from '$lib/core/components/GameScreen.svelte';
+	import GameTitle from '$lib/core/components/GameTitle.svelte';
 	import Sheet from '$lib/games/ronin/Sheet.svelte';
 	import { meta } from '$lib/games/ronin/meta';
 	import { RoninState, type Character } from '$lib/games/ronin/state.svelte';
 	import { getCharacter } from '$lib/core/storage';
+	import { it } from '$lib/games/ronin/engine/data/it';
 	import { page } from '$app/state';
 	import '$lib/games/ronin/theme.css';
 
 	const game = new RoninState();
 
-	// Carica un personaggio salvato indicato da ?load=<id>.
+	let initialized = false;
+	// All'apertura genera subito un personaggio; se c'è ?load=<id>, carica quello.
 	$effect(() => {
 		const id = page.url.searchParams.get('load');
-		if (!id) return;
-		const found = getCharacter(id);
-		if (found?.game === 'ronin') game.load(found.data as Character);
+		if (id) {
+			const found = getCharacter(id);
+			if (found?.game === 'ronin') game.load(found.data as Character);
+			initialized = true;
+			return;
+		}
+		if (!initialized) {
+			initialized = true;
+			game.generate();
+		}
 	});
 </script>
 
@@ -24,6 +34,10 @@
 	generate={() => game.generate()}
 	save={() => game.save()}
 >
+	{#snippet header()}
+		<GameTitle name="RŌNIN" subtitle={it('page.title')} />
+	{/snippet}
+
 	{#snippet controls()}
 		<div class="honour-controls">
 			<p>La tua ultima morte è stata&hellip;</p>
