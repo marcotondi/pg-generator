@@ -39,7 +39,7 @@ export const classes: PirateClass[] = [
 	},
 	{
 		id: 2,
-		name: 'Lazzarone',
+		name: 'Filibustiere',
 		modifiers: { AGILITÀ: 2, FORZA: -1, VIGORE: -1 },
 		hpDie: 8,
 		devilLuck: 'd2',
@@ -76,7 +76,7 @@ export const classes: PirateClass[] = [
 	},
 	{
 		id: 4,
-		name: 'Spadaccino',
+		name: 'Spaccone',
 		modifiers: { FORZA: 1, AGILITÀ: 1, PRESENZA: -1, SPIRITO: -1 },
 		hpDie: 10,
 		devilLuck: 'd2',
