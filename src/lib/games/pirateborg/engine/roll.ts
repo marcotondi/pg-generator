@@ -37,11 +37,16 @@ function findEntry(entries: TableEntry[], value: number): TableEntry | undefined
 	return entries.find((e) => value >= e.min && value <= e.max);
 }
 
+/** Il dado di una tabella è il massimo `max` tra le voci, non il primo. */
+function tableSides(entries: TableEntry[]): number {
+	return entries.reduce((max, e) => Math.max(max, e.max), 0);
+}
+
 /** Tira su una lista di voci (usata anche per le tabelle inline delle classi). */
 export function rollOnEntries(entries: TableEntry[]): RollResult {
 	if (entries.length === 0) return { value: 0, result: '—', subrolls: [] };
 
-	const dieSides = entries[0]?.max || entries.length;
+	const dieSides = tableSides(entries) || entries.length;
 	const value = rollDie(dieSides);
 	const entry = findEntry(entries, value);
 
