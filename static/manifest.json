@@ -1,0 +1,25 @@
+{
+	"name": "PG Generator — Schede Personaggio",
+	"short_name": "PG Generator",
+	"description": "Generatore di schede personaggio per Rōnin e PirateBorg",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#131313",
+	"theme_color": "#131313",
+	"orientation": "portrait",
+	"lang": "it",
+	"icons": [
+		{
+			"src": "/icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}

@@ -1,0 +1,18 @@
+schema: spec-driven
+
+# Project context (optional)
+# This is shown to AI when creating artifacts.
+context: |
+  PG Generator: un'unica app SvelteKit 5 (runes, TypeScript, adapter-static) che
+  genera schede personaggio per due giochi di ruolo: Rōnin e PirateBorg.
+  Architettura modulare: src/lib/core/ (shell condivisa: layout, mattoni UI, token,
+  storage, stampa, PWA) + src/lib/games/<id>/ (motore TS puro, dati, tema, Sheet.svelte).
+  Il contratto dei token e' condiviso per nome in core/tokens.css; i valori vivono nel
+  theme.css di ogni gioco. L'app e' solo in italiano: niente i18n, stringhe italiane
+  dirette nei dati. Persistenza in localStorage con involucro { version, game, data }.
+  Deploy: un solo progetto Cloudflare Pages (root pg-generator/, output build/).
+
+# Per-artifact rules (optional)
+rules:
+  tasks:
+    - Task piccoli, verificabili, raggruppati per dipendenza

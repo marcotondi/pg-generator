@@ -1,0 +1,24 @@
+/* Tema PirateBorg — Cursed Gold & Iron: giallo elettrico su nero, angoli 0. */
+.theme-pirateborg {
+	--color-bg: #131313;
+	--color-bg-alt: #1b1c1c;
+	--color-surface: #1f2020;
+	--color-surface-alt: #2a2a2a;
+	--color-text: #e4e2e1;
+	--color-text-muted: #cac8aa;
+	--color-text-dim: #939277;
+	--color-accent: #cdcd00;
+	--color-accent-dim: #686800;
+	--color-accent-bright: #eaea00;
+	--color-danger: #ffb4ab;
+	--color-border: #484831;
+
+	--font-heading: 'Anton', 'Impact', sans-serif;
+	--font-body: 'Work Sans', 'Arial', sans-serif;
+	--font-mono: 'JetBrains Mono', 'Consolas', monospace;
+	--font-special: var(--font-body);
+
+	--radius-sm: 0px;
+	--radius-md: 0px;
+	--radius-lg: 0px;
+}

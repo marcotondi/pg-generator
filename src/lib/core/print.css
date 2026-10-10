@@ -1,0 +1,35 @@
+@media print {
+	body {
+		background: white !important;
+		color: black !important;
+		font-size: 11pt;
+	}
+
+	header,
+	footer,
+	nav,
+	.no-print,
+	.toast,
+	.sheet-actions,
+	.generate-section,
+	.hamburger-menu,
+	.overlay,
+	.hero-image {
+		display: none !important;
+	}
+
+	.sheet,
+	.sheet * {
+		background: white !important;
+		color: black !important;
+		border-color: black !important;
+	}
+
+	.sheet {
+		border: 2px solid black !important;
+	}
+
+	@page {
+		margin: 1.5cm;
+	}
+}
