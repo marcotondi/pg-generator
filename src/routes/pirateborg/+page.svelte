@@ -37,7 +37,41 @@
 		<GameTitle name="PIRATEBORG" subtitle="GENERA IL TUO PG" />
 	{/snippet}
 
+	{#snippet controls()}
+		<div class="options">
+			<label>
+				<input
+					type="checkbox"
+					checked={game.optionalClasses}
+					onchange={(e) => {
+						game.optionalClasses = e.currentTarget.checked;
+						game.generate();
+					}}
+				/>
+				Includi classi opzionali
+			</label>
+		</div>
+	{/snippet}
+
 	{#snippet sheet()}
 		<Sheet character={game.character} />
 	{/snippet}
 </GameScreen>
+
+<style>
+	.options {
+		display: flex;
+		justify-content: center;
+		margin-bottom: var(--space-md);
+	}
+	.options label {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-sm);
+		color: var(--color-text-muted);
+		cursor: pointer;
+	}
+	.options input {
+		width: auto;
+	}
+</style>

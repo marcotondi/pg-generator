@@ -2,7 +2,12 @@ import type { TableEntry } from './equipment';
 
 export const backgroundTable: TableEntry[] = [];
 for (let i = 1; i <= 100; i++) {
-	backgroundTable.push({ min: i, max: i, result: `Background #${i} (vedi regolamento pag. 46)` });
+	backgroundTable.push({ min: i, max: i, result: `Professione #${i}` });
+}
+
+export const backgroundTie: TableEntry[] = [];
+for (let i = 1; i <= 100; i++) {
+	backgroundTie.push({ min: i, max: i, result: `Legame #${i}` });
 }
 
 export const piecesOfEight: TableEntry[] = [];

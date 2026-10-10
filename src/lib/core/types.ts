@@ -18,7 +18,7 @@ export interface GameMeta {
 }
 
 /** Versione dell'involucro di salvataggio. */
-export const ENVELOPE_VERSION = 1;
+export const ENVELOPE_VERSION = 2;
 
 /** Personaggio salvato: involucro comune a tutti i giochi. */
 export interface SavedCharacter<T = unknown> {

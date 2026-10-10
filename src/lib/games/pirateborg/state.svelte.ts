@@ -8,29 +8,34 @@ function empty(): PirateCharacter {
 	return {
 		name: '',
 		container: '',
-		commonItems: [],
-		luxuryItems: [],
+		economicItem: '',
+		luxuryItem: '',
+		weapons: [],
+		clothes: '',
+		hat: '',
 		attributes: [],
 		classId: null,
 		classData: null,
-		weapon: '',
-		clothes: '',
-		hat: '',
-		background: '',
-		piecesOfEight: '',
-		distinctiveFlaw: '',
-		physicalPeculiarity: '',
-		idiosyncrasy: '',
-		misfortunes: '',
-		preciousThings: '',
+		classTrait: undefined,
 		hp: 0,
 		hpMax: 0,
 		devilLuck: 0,
-		devilLuckMax: 0
+		devilLuckMax: 0,
+		background: {
+			profession: '',
+			silver: '',
+			tie: '',
+			distinctiveFlaw: '',
+			physicalPeculiarity: '',
+			idiosyncrasy: '',
+			misfortunes: '',
+			preciousThings: ''
+		}
 	};
 }
 
 export class PirateBorgState {
+	optionalClasses = $state(false);
 	character = $state<PirateCharacter>(empty());
 
 	get hasCharacter(): boolean {
@@ -38,7 +43,7 @@ export class PirateBorgState {
 	}
 
 	generate(): void {
-		this.character = generatePirate();
+		this.character = generatePirate({ optionalClasses: this.optionalClasses });
 	}
 
 	load(data: PirateCharacter): void {

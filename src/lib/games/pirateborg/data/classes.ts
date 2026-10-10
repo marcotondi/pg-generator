@@ -135,6 +135,11 @@ export const classes: PirateClass[] = [
 	},
 ];
 
-export const classTable: TableEntry[] = classes.map((c, i) => ({
-	min: i + 1, max: i + 1, result: c.name,
-}));
+/** Classi di base: le prime 6. Le successive sono opzionali. */
+const BASE_CLASS_COUNT = 6;
+
+/** Tabella delle classi tirate: 6 di base, oppure tutte se le opzionali sono incluse. */
+export function buildClassTable(includeOptional: boolean): TableEntry[] {
+	const list = includeOptional ? classes : classes.slice(0, BASE_CLASS_COUNT);
+	return list.map((c, i) => ({ min: i + 1, max: i + 1, result: c.name }));
+}

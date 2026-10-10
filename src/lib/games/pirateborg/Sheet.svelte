@@ -16,7 +16,10 @@
 
 	<div class="stats-row">
 		{#each character.attributes as attr}
-			<StatBlock label={attr.name.slice(0, 3)} value={attr.value} mod={attr.mod} />
+			<StatBlock
+				label={attr.name.slice(0, 3)}
+				value={attr.mod >= 0 ? `+${attr.mod}` : String(attr.mod)}
+			/>
 		{/each}
 	</div>
 
@@ -33,34 +36,56 @@
 		</div>
 	</div>
 
+	{#if character.classTrait}
+		<Divider />
+		<div class="trait">
+			<SectionHeading text={character.classTrait.label} center />
+			<p class="trait-value">{character.classTrait.value}</p>
+		</div>
+	{/if}
+
 	<Divider />
 
 	<div class="two-col">
 		<div class="col">
+			<SectionHeading text="Armi" />
+			<ItemList>
+				{#each character.weapons as weapon}
+					<li>{weapon}</li>
+				{/each}
+			</ItemList>
+		</div>
+		<div class="col">
 			<SectionHeading text="Equipaggiamento" />
 			<ItemList>
 				<li><strong>Contenitore:</strong> {character.container || '—'}</li>
-				{#each character.commonItems as item}
-					<li>{item}</li>
-				{/each}
-				{#each character.luxuryItems as item}
-					<li>{item}</li>
-				{/each}
-				<li><strong>Arma:</strong> {character.weapon || '—'}</li>
+				<li><strong>Oggetto:</strong> {character.economicItem || '—'}</li>
+				<li><strong>Pregiato:</strong> {character.luxuryItem || '—'}</li>
 				<li><strong>Vestiti:</strong> {character.clothes || '—'}</li>
 				<li><strong>Cappello:</strong> {character.hat || '—'}</li>
 			</ItemList>
 		</div>
+	</div>
+
+	<Divider />
+
+	<div class="two-col">
 		<div class="col">
 			<SectionHeading text="Background" />
 			<ItemList>
-				<li><strong>{character.background || '—'}</strong></li>
-				<li>Pezzi da Otto: {character.piecesOfEight || '—'}</li>
-				<li>Difetto: {character.distinctiveFlaw || '—'}</li>
-				<li>Peculiarità: {character.physicalPeculiarity || '—'}</li>
-				<li>Idiosincrasia: {character.idiosyncrasy || '—'}</li>
-				<li>Disgrazie: {character.misfortunes || '—'}</li>
-				<li>Cose Preziose: {character.preciousThings || '—'}</li>
+				<li><strong>Professione:</strong> {character.background.profession || '—'}</li>
+				<li><strong>Argento:</strong> {character.background.silver || '—'}</li>
+				<li><strong>Legame:</strong> {character.background.tie || '—'}</li>
+			</ItemList>
+		</div>
+		<div class="col">
+			<SectionHeading text="Dettagli" />
+			<ItemList>
+				<li>Difetto: {character.background.distinctiveFlaw || '—'}</li>
+				<li>Segno: {character.background.physicalPeculiarity || '—'}</li>
+				<li>Idiosincrasia: {character.background.idiosyncrasy || '—'}</li>
+				<li>Disgrazie: {character.background.misfortunes || '—'}</li>
+				<li>Cose preziose: {character.background.preciousThings || '—'}</li>
 			</ItemList>
 		</div>
 	</div>
@@ -122,6 +147,13 @@
 	.vital-max {
 		font-size: 1rem;
 		color: var(--color-text-dim);
+	}
+	.trait {
+		text-align: center;
+	}
+	.trait-value {
+		margin: 0;
+		color: var(--color-text);
 	}
 	.two-col {
 		display: grid;

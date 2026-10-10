@@ -1,39 +1,47 @@
-import { roll, rollStats, type StatRoll } from './roll';
+import { roll, rollOnEntries, rollStats, type StatRoll } from './roll';
 import { registerAllTables } from './tables';
-import { classes, type PirateClass } from '../data/classes';
+import { classes, buildClassTable, type PirateClass } from '../data/classes';
 
 export type { StatRoll };
 
-export interface PirateCharacter {
-	name: string;
-	container: string;
-	commonItems: string[];
-	luxuryItems: string[];
-	attributes: StatRoll[];
-	classId: number | null;
-	classData: PirateClass | null;
-	weapon: string;
-	clothes: string;
-	hat: string;
-	background: string;
-	piecesOfEight: string;
+export interface ClassTrait {
+	label: string;
+	value: string;
+}
+
+export interface PirateBackground {
+	profession: string;
+	silver: string;
+	tie: string;
 	distinctiveFlaw: string;
 	physicalPeculiarity: string;
 	idiosyncrasy: string;
 	misfortunes: string;
 	preciousThings: string;
+}
+
+export interface PirateCharacter {
+	name: string;
+	container: string;
+	economicItem: string;
+	luxuryItem: string;
+	weapons: string[];
+	clothes: string;
+	hat: string;
+	attributes: StatRoll[];
+	classId: number | null;
+	classData: PirateClass | null;
+	classTrait?: ClassTrait;
 	hp: number;
 	hpMax: number;
 	devilLuck: number;
 	devilLuckMax: number;
+	background: PirateBackground;
 }
 
-const NAMES = [
-	'Jack "Squalo" Blood', 'Anne Bonny', 'Calico Jack', 'Blackbeard',
-	'Long John Silver', "Grace O'Malley", 'Henry Morgan', 'Barbanera Jr.',
-	'Molly Reef', "Davy Jones' Heir", 'Capitano Uncino', 'Flint',
-	'Silverhand', 'Redbeard', 'One-Eyed Willie',
-];
+export interface GenerateOptions {
+	optionalClasses?: boolean;
+}
 
 let registered = false;
 function ensureTables(): void {
@@ -49,36 +57,88 @@ function rollDie(sides: number): number {
 
 function formatRoll(tableId: string): string {
 	const r = roll(tableId);
-	return r.subrolls.length
-		? `${r.result}: ${r.subrolls.map((x) => x.result).join(', ')}`
-		: r.result;
+	return r.subrolls.length ? `${r.result}: ${r.subrolls.map((x) => x.result).join(', ')}` : r.result;
 }
 
-export function generatePirate(): PirateCharacter {
-	ensureTables();
+type TraitKey =
+	| 'specialityTable'
+	| 'abilityTable'
+	| 'styleTable'
+	| 'prayerTable'
+	| 'spellTable'
+	| 'tormentTable'
+	| 'tallTaleTable';
 
-	const name = NAMES[Math.floor(Math.random() * NAMES.length)];
-	const container = formatRoll('container');
-	const commonItems: string[] = [];
-	for (let i = 0; i < 2; i++) commonItems.push(formatRoll('commonItems'));
-	const luxuryItems = [formatRoll('luxuryItems')];
+const TRAIT_TABLES: { key: TraitKey; label: string }[] = [
+	{ key: 'specialityTable', label: 'Specialità' },
+	{ key: 'abilityTable', label: 'Abilità' },
+	{ key: 'styleTable', label: 'Stile' },
+	{ key: 'prayerTable', label: 'Preghiera' },
+	{ key: 'spellTable', label: 'Incantesimo' },
+	{ key: 'tormentTable', label: 'Tormento' },
+	{ key: 'tallTaleTable', label: 'Frottola' }
+];
+
+function describe(result: { result: string; subrolls: { result: string }[] }): string {
+	return result.subrolls.length
+		? `${result.result}: ${result.subrolls.map((s) => s.result).join(', ')}`
+		: result.result;
+}
+
+/** Tratto di classe: la prima tabella di tratto presente sulla classe. */
+function rollClassTrait(cls: PirateClass): ClassTrait | undefined {
+	for (const { key, label } of TRAIT_TABLES) {
+		const table = cls[key];
+		if (Array.isArray(table) && table.length > 0) {
+			return { label, value: describe(rollOnEntries(table)) };
+		}
+	}
+	return undefined;
+}
+
+/** Arma a cascata: tabella di classe → arma fissa → tabella armi. */
+function rollWeapons(cls: PirateClass | null): string[] {
+	const weapons: string[] = [];
+	if (cls?.weaponTable?.length) {
+		weapons.push(describe(rollOnEntries(cls.weaponTable)));
+	} else if (cls?.weapon) {
+		weapons.push(cls.weapon);
+	} else {
+		weapons.push(formatRoll('weapons'));
+	}
+	if (cls?.hasMusket) {
+		weapons.push('Moschetto (2d6, ricarica 2 azioni, gittata 45m)');
+	}
+	return weapons;
+}
+
+export function generatePirate(options: GenerateOptions = {}): PirateCharacter {
+	ensureTables();
+	const includeOptional = options.optionalClasses ?? false;
+
+	// 1. Abilità: 3d6 → solo modificatore.
 	const attributes = rollStats();
 
-	const cr = roll('classi');
-	const idx = classes.findIndex((c) => c.name === cr.result);
-	let classId: number | null = null;
-	let classData: PirateClass | null = null;
+	// 2. Classe: 6 di base, oppure 8 con le opzionali.
+	const classRoll = rollOnEntries(buildClassTable(includeOptional));
+	const idx = classes.findIndex((c) => c.name === classRoll.result);
+	const cls: PirateClass | null = idx >= 0 ? classes[idx] : null;
+
+	// 3. I modificatori di classe si sommano dopo il tiro.
+	if (cls) {
+		for (const attr of attributes) {
+			attr.mod += cls.modifiers[attr.name] ?? 0;
+		}
+	}
+
+	// 4. Derivati: PF e Fortuna del Diavolo.
 	let hp = 0;
 	let hpMax = 0;
 	let devilLuck = 0;
 	let devilLuckMax = 0;
-
-	if (idx >= 0) {
-		const cls = classes[idx];
-		classId = idx;
-		classData = cls;
+	if (cls) {
 		const vigoreMod = attributes.find((a) => a.name === 'VIGORE')?.mod ?? 0;
-		hpMax = Math.max(1, rollDie(cls.hpDie)) + vigoreMod;
+		hpMax = Math.max(1, rollDie(cls.hpDie) + vigoreMod);
 		hp = hpMax;
 		const dlMatch = cls.devilLuck.match(/d(\d+)/);
 		const dlDie = dlMatch ? parseInt(dlMatch[1]) : 2;
@@ -86,27 +146,34 @@ export function generatePirate(): PirateCharacter {
 		devilLuck = devilLuckMax;
 	}
 
-	return {
-		name,
-		container,
-		commonItems,
-		luxuryItems,
-		attributes,
-		classId,
-		classData,
-		weapon: formatRoll('weapons'),
-		clothes: formatRoll('clothes'),
-		hat: formatRoll('hats'),
-		background: formatRoll('background'),
-		piecesOfEight: formatRoll('piecesOfEight'),
+	// 5. Background e dettagli.
+	const background: PirateBackground = {
+		profession: formatRoll('background'),
+		silver: formatRoll('piecesOfEight'),
+		tie: formatRoll('backgroundTie'),
 		distinctiveFlaw: formatRoll('distinctiveFlaw'),
 		physicalPeculiarity: formatRoll('physicalPeculiarity'),
 		idiosyncrasy: formatRoll('idiosyncrasy'),
 		misfortunes: formatRoll('misfortunes'),
-		preciousThings: formatRoll('preciousThings'),
+		preciousThings: formatRoll('preciousThings')
+	};
+
+	return {
+		name: formatRoll('names'),
+		container: formatRoll('container'),
+		economicItem: formatRoll('commonItems'),
+		luxuryItem: formatRoll('luxuryItems'),
+		weapons: rollWeapons(cls),
+		clothes: formatRoll('clothes'),
+		hat: formatRoll('hats'),
+		attributes,
+		classId: idx >= 0 ? idx : null,
+		classData: cls,
+		classTrait: cls ? rollClassTrait(cls) : undefined,
 		hp,
 		hpMax,
 		devilLuck,
-		devilLuckMax
+		devilLuckMax,
+		background
 	};
 }
