@@ -22,7 +22,7 @@
 	.stat-label {
 		display: block;
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: 0.75rem;
 		font-weight: 700;
 		color: var(--color-text-dim);
 		text-transform: uppercase;

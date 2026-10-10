@@ -56,7 +56,6 @@
 		z-index: 1100;
 	}
 	.update-banner button {
-		min-height: auto;
 		padding: var(--space-xs) var(--space-sm);
 	}
 </style>

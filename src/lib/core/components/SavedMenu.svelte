@@ -12,25 +12,63 @@
 
 	let open = $state(false);
 	let items = $state<SavedCharacter[]>([]);
+	let buttonEl = $state<HTMLButtonElement | undefined>(undefined);
+	let drawerEl = $state<HTMLElement | undefined>(undefined);
+
+	function close() {
+		open = false;
+		buttonEl?.focus();
+	}
 
 	function toggle() {
-		open = !open;
-		if (open) items = getCharacters();
+		if (open) {
+			close();
+			return;
+		}
+		items = getCharacters();
+		open = true;
 	}
 
 	function select(item: SavedCharacter) {
 		open = false;
 		goto(`/${item.game}/?load=${item.id}`);
 	}
+
+	function onKeydown(event: KeyboardEvent) {
+		if (open && event.key === 'Escape') {
+			event.preventDefault();
+			close();
+		}
+	}
+
+	// Sposta il focus nel pannello all'apertura, così la tastiera ci entra subito.
+	$effect(() => {
+		if (open) drawerEl?.focus();
+	});
 </script>
 
-<button class="hamburger-btn" onclick={toggle} aria-label="Personaggi salvati" aria-expanded={open}>
+<svelte:window onkeydown={onKeydown} />
+
+<button
+	class="hamburger-btn"
+	bind:this={buttonEl}
+	onclick={toggle}
+	aria-label="Personaggi salvati"
+	aria-expanded={open}
+	aria-haspopup="dialog"
+>
 	☰
 </button>
 
 {#if open}
-	<div class="overlay" onclick={() => (open = false)} role="presentation"></div>
-	<nav class="hamburger-menu" aria-label="Personaggi salvati">
+	<button
+		class="overlay"
+		type="button"
+		tabindex="-1"
+		aria-label="Chiudi menu"
+		onclick={close}
+	></button>
+	<nav class="hamburger-menu" bind:this={drawerEl} tabindex="-1" aria-label="Personaggi salvati">
 		<a class="menu-link" href="/" onclick={() => (open = false)}>Home</a>
 		<p class="menu-title">Personaggi salvati</p>
 		{#if items.length === 0}
@@ -56,16 +94,30 @@
 		border: none;
 		color: var(--color-accent);
 		font-size: 1.5rem;
-		padding: var(--space-xs);
+		padding: 0;
+		min-width: 44px;
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		flex-shrink: 0;
 		line-height: 1;
-		min-height: auto;
 	}
 	.overlay {
 		position: fixed;
 		inset: 0;
-		background: rgba(0, 0, 0, 0.5);
 		z-index: 900;
+		background: rgba(0, 0, 0, 0.5);
+		border: none;
+		border-radius: 0;
+		padding: 0;
+		min-height: 0;
+		color: transparent;
+		cursor: pointer;
+	}
+	.overlay:hover {
+		background: rgba(0, 0, 0, 0.5);
+		color: transparent;
 	}
 	.hamburger-menu {
 		position: fixed;
@@ -78,6 +130,9 @@
 		padding: var(--space-lg);
 		overflow-y: auto;
 		z-index: 950;
+	}
+	.hamburger-menu:focus {
+		outline: none;
 	}
 	.menu-link,
 	.menu-title {
@@ -122,7 +177,7 @@
 	}
 	.item-game {
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: 0.75rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		color: var(--color-text-dim);

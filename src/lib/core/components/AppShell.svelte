@@ -119,14 +119,14 @@
 		gap: var(--space-xs);
 	}
 	.license-text {
-		font-size: 0.65rem;
+		font-size: 0.75rem;
 		color: var(--color-text-dim);
 		line-height: 1.4;
 		margin: 0;
 	}
 	.version-text {
 		font-family: var(--font-mono);
-		font-size: 0.65rem;
+		font-size: 0.75rem;
 		color: var(--color-text-dim);
 		margin: 0;
 	}
