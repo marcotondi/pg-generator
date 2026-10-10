@@ -43,7 +43,9 @@
 	</div>
 
 	{#if hasCharacter}
-		{@render sheet()}
+		<div class="sheet-wrap">
+			{@render sheet()}
+		</div>
 
 		<div class="sheet-actions no-print">
 			<button class="btn-primary" onclick={onSave}>💾 Salva Personaggio</button>
@@ -62,5 +64,16 @@
 		display: flex;
 		gap: var(--space-sm);
 		margin-top: var(--space-md);
+	}
+	.sheet-wrap {
+		animation: sheet-in 180ms ease-out;
+	}
+	@keyframes sheet-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 </style>

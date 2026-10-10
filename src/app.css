@@ -50,6 +50,9 @@ button:hover {
 	background: var(--color-accent);
 	color: var(--color-bg);
 }
+button:active:not(:disabled) {
+	transform: translateY(1px);
+}
 button:disabled {
 	opacity: 0.4;
 	cursor: not-allowed;
@@ -95,5 +98,16 @@ hr {
 @media (max-width: 480px) {
 	html {
 		font-size: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
 	}
 }

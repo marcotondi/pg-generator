@@ -78,9 +78,11 @@
 		border-radius: var(--radius-md);
 		transition: border-color 0.2s, transform 0.2s;
 	}
-	.choice:hover {
-		border-color: var(--color-accent);
-		transform: translateY(-2px);
+	@media (hover: hover) {
+		.choice:hover {
+			border-color: var(--color-accent);
+			transform: translateY(-2px);
+		}
 	}
 	.choice-logo {
 		width: 96px;

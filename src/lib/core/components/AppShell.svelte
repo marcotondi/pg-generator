@@ -142,7 +142,7 @@
 		pointer-events: none;
 		z-index: 0;
 	}
-	@media (max-width: 768px) {
+	@media (max-width: 1024px) {
 		.hero-image {
 			display: none;
 		}
