@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { getCharacters } from '../storage';
+	import { deleteCharacter, getCharacters } from '../storage';
 	import type { GameId, SavedCharacter } from '../types';
 
 	let { currentGame }: { currentGame: GameId } = $props();
@@ -32,6 +32,12 @@
 	function select(item: SavedCharacter) {
 		open = false;
 		goto(`/${item.game}/?load=${item.id}`);
+	}
+
+	function remove(item: SavedCharacter) {
+		if (!confirm(`Cancellare "${item.name || 'Senza nome'}"?`)) return;
+		deleteCharacter(item.id);
+		items = getCharacters();
 	}
 
 	function onKeydown(event: KeyboardEvent) {
@@ -76,10 +82,18 @@
 		{:else}
 			<ul>
 				{#each items as item (item.id)}
-					<li>
+					<li class="row">
 						<button class="menu-item" class:current={item.game === currentGame} onclick={() => select(item)}>
 							<span class="item-name">{item.name || 'Senza nome'}</span>
 							<span class="item-game">{GAME_LABELS[item.game] ?? item.game}</span>
+						</button>
+						<button
+							class="delete"
+							type="button"
+							aria-label={`Cancella ${item.name || 'personaggio'}`}
+							onclick={() => remove(item)}
+						>
+							✕
 						</button>
 					</li>
 				{/each}
@@ -160,7 +174,8 @@
 		gap: var(--space-xs);
 	}
 	.menu-item {
-		width: 100%;
+		flex: 1;
+		min-width: 0;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -170,6 +185,16 @@
 	}
 	.menu-item.current {
 		border-color: var(--color-accent);
+	}
+	.row {
+		display: flex;
+		gap: var(--space-xs);
+	}
+	.delete {
+		min-width: 44px;
+		padding: 0 var(--space-sm);
+		border-color: var(--color-border);
+		color: var(--color-text-dim);
 	}
 	.item-name {
 		font-family: var(--font-body);
