@@ -1,16 +1,13 @@
 /* Tema PirateBorg — stampa/nautico: blu-grigio, serif da libro. */
 .theme-pirateborg {
 	--color-bg: #242220;
-	--color-bg-alt: #2c2a28;
 	--color-surface: #1d2833;
 	--color-surface-alt: #26323f;
 	--color-text: #e6ebef;
 	--color-text-muted: #a7b4c0;
 	--color-text-dim: #8694a3;
 	--color-accent: #8fa6b8;
-	--color-accent-dim: #46596a;
 	--color-accent-bright: #aec4d6;
-	--color-danger: #c47a6b;
 	--color-border: #2f3d4b;
 
 	--font-heading: 'Almendra SC', serif;
@@ -20,7 +17,6 @@
 
 	--radius-sm: 0px;
 	--radius-md: 0px;
-	--radius-lg: 0px;
 
 	--hero-rotate: 0deg;
 	--hero-opacity: 0.85;

@@ -10,8 +10,6 @@ export interface GameMeta {
 	logo?: string;
 	/** Immagine decorativa (URL statico, opzionale). */
 	heroImage?: string;
-	/** Immagine del pulsante di generazione (URL statico, opzionale). */
-	generateImage?: string;
 	/** Testo di licenza mostrato nel footer. */
 	license: string;
 	repoUrl: string;

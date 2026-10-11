@@ -1,21 +1,16 @@
 <script lang="ts">
 	let {
 		lines,
-		image,
 		onclick,
 		ariaLabel = 'Genera un nuovo personaggio'
 	}: {
 		lines: string[];
-		image?: string;
 		onclick: () => void;
 		ariaLabel?: string;
 	} = $props();
 </script>
 
 <button class="generate-btn" {onclick} aria-label={ariaLabel}>
-	{#if image}
-		<img src={image} alt="" class="generate-logo" />
-	{/if}
 	<span class="generate-text">
 		{#each lines as line, i}{#if i > 0}<br />{/if}{line}{/each}
 	</span>
@@ -41,17 +36,8 @@
 		background: var(--color-accent);
 		border-color: var(--color-accent-bright);
 	}
-	.generate-btn:hover .generate-logo {
-		filter: brightness(0);
-	}
 	.generate-btn:hover .generate-text {
 		color: var(--color-bg);
-	}
-	.generate-logo {
-		width: 60px;
-		height: 60px;
-		object-fit: contain;
-		transition: filter 0.2s;
 	}
 	.generate-text {
 		font-family: var(--font-heading);
@@ -67,10 +53,6 @@
 		.generate-btn {
 			width: 140px;
 			height: 140px;
-		}
-		.generate-logo {
-			width: 50px;
-			height: 50px;
 		}
 	}
 </style>

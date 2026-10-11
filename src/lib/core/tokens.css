@@ -3,16 +3,13 @@
 :root {
 	/* Colori — sfondo unico dell'app (Rōnin), accenti per gioco */
 	--color-bg: #242220;
-	--color-bg-alt: #2c2a28;
 	--color-surface: #1d2833;
 	--color-surface-alt: #26323f;
 	--color-text: #e6ebef;
 	--color-text-muted: #a7b4c0;
 	--color-text-dim: #8694a3;
 	--color-accent: #8fa6b8;
-	--color-accent-dim: #46596a;
 	--color-accent-bright: #aec4d6;
-	--color-danger: #c47a6b;
 	--color-border: #2f3d4b;
 
 	/* Tipografia — PirateBorg: stampa/nautico */
@@ -24,7 +21,6 @@
 	/* Forme */
 	--radius-sm: 0px;
 	--radius-md: 0px;
-	--radius-lg: 0px;
 
 	/* Spazi */
 	--space-xs: 0.25rem;
@@ -38,7 +34,6 @@
 	--max-width: 600px;
 
 	/* Hero (immagine decorativa di sfondo, opzionale) */
-	--hero-image: none;
 	--hero-opacity: 0.7;
 	--hero-rotate: 25deg;
 }

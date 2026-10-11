@@ -25,6 +25,26 @@ self.addEventListener('message', (event) => {
 	}
 });
 
+const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
+
 self.addEventListener('fetch', (event) => {
+	// I font di Google sono cross-origin: li mettiamo in cache al primo uso,
+	// così restano disponibili anche offline.
+	const url = new URL(event.request.url);
+	if (FONT_HOSTS.includes(url.hostname)) {
+		event.respondWith(
+			caches.open(CACHE).then(async (cache) => {
+				const cached = await cache.match(event.request);
+				if (cached) return cached;
+				const response = await fetch(event.request);
+				if (response.ok || response.type === 'opaque') {
+					cache.put(event.request, response.clone());
+				}
+				return response;
+			})
+		);
+		return;
+	}
+
 	event.respondWith(caches.match(event.request).then((cached) => cached ?? fetch(event.request)));
 });

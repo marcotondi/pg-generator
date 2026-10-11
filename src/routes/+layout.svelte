@@ -10,18 +10,23 @@
 
 	onMount(() => {
 		if (!('serviceWorker' in navigator) || import.meta.env.DEV) return;
-		navigator.serviceWorker.register('/service-worker.js').then((reg) => {
-			registration = reg;
-			if (reg.waiting) updateReady = true;
-			reg.addEventListener('updatefound', () => {
-				const installing = reg.installing;
-				installing?.addEventListener('statechange', () => {
-					if (installing.state === 'installed' && navigator.serviceWorker.controller) {
-						updateReady = true;
-					}
+		navigator.serviceWorker
+			.register('/service-worker.js')
+			.then((reg) => {
+				registration = reg;
+				if (reg.waiting) updateReady = true;
+				reg.addEventListener('updatefound', () => {
+					const installing = reg.installing;
+					installing?.addEventListener('statechange', () => {
+						if (installing.state === 'installed' && navigator.serviceWorker.controller) {
+							updateReady = true;
+						}
+					});
 				});
+			})
+			.catch(() => {
+				// La registrazione può fallire (es. contesto non sicuro): l'app funziona lo stesso.
 			});
-		});
 	});
 
 	function reload() {

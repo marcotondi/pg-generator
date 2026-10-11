@@ -11,3 +11,6 @@ vite.config.ts.timestamp-*
 
 # File di sessione dell'agente
 /session
+
+# Tooling dell'agente
+/.pi/

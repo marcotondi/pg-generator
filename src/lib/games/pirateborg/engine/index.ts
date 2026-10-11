@@ -57,8 +57,7 @@ function rollDie(sides: number): number {
 }
 
 function formatRoll(tableId: string): string {
-	const r = roll(tableId);
-	return r.subrolls.length ? `${r.result}: ${r.subrolls.map((x) => x.result).join(', ')}` : r.result;
+	return describe(roll(tableId));
 }
 
 /** Il Background è una sola riga d100: professione, dadi argento e oggetto. */

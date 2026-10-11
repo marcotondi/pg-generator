@@ -39,7 +39,7 @@
 	{@render controls?.()}
 
 	<div class="generate-section">
-		<GenerateButton lines={['Genera', 'Nuovo PG']} image={meta.generateImage} onclick={generate} />
+		<GenerateButton lines={['Genera', 'Nuovo PG']} onclick={generate} />
 	</div>
 
 	{#if hasCharacter}
