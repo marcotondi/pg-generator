@@ -3,7 +3,7 @@
 	import type { GameMeta } from '../types';
 	import AppShell from './AppShell.svelte';
 	import GenerateButton from './GenerateButton.svelte';
-	import SavedMenu from './SavedMenu.svelte';
+	import SheetActions from './SheetActions.svelte';
 	import { toast } from '../toast.svelte';
 
 	let {
@@ -30,11 +30,7 @@
 	}
 </script>
 
-<AppShell {meta} showTitle={!header}>
-	{#snippet menu()}
-		<SavedMenu currentGame={meta.id} />
-	{/snippet}
-
+<AppShell {meta}>
 	{@render header?.()}
 	{@render controls?.()}
 
@@ -47,10 +43,7 @@
 			{@render sheet()}
 		</div>
 
-		<div class="sheet-actions no-print">
-			<button class="btn-primary" onclick={onSave}>💾 Salva Personaggio</button>
-			<button onclick={() => window.print()}>🖨️ Stampa</button>
-		</div>
+		<SheetActions {onSave} />
 	{/if}
 </AppShell>
 
@@ -59,11 +52,6 @@
 		display: flex;
 		justify-content: center;
 		margin: var(--space-xl) 0;
-	}
-	.sheet-actions {
-		display: flex;
-		gap: var(--space-sm);
-		margin-top: var(--space-md);
 	}
 	.sheet-wrap {
 		animation: sheet-in 180ms ease-out;

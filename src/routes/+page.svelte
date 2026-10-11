@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { games } from '$lib/games/registry';
+	import Navbar from '$lib/core/components/Navbar.svelte';
 	import '$lib/games/ronin/theme.css';
 	import '$lib/games/pirateborg/theme.css';
 </script>
@@ -8,7 +9,9 @@
 	<title>PG Generator — Schede Personaggio</title>
 </svelte:head>
 
-<div class="landing">
+<div class="home">
+	<Navbar currentGame={null} />
+	<div class="landing">
 	<header class="landing-header">
 		<h1>PG Generator</h1>
 		<p class="intro">
@@ -30,19 +33,26 @@
 		{/each}
 	</div>
 
-	<p class="landing-note">Genera un personaggio completo in un click, salvalo e stampalo.</p>
+		<p class="landing-note">Genera un personaggio completo in un click, salvalo e stampalo.</p>
+	</div>
 </div>
 
 <style>
-	.landing {
+	.home {
 		max-width: 900px;
 		margin: 0 auto;
-		padding: var(--space-2xl) var(--space-md);
+		padding: 0 var(--space-md);
 		min-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+	}
+	.landing {
+		flex: 1;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		gap: var(--space-xl);
+		padding: var(--space-xl) 0;
 	}
 	.landing-header {
 		text-align: center;
