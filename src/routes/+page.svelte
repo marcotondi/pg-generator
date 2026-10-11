@@ -11,7 +11,10 @@
 <div class="landing">
 	<header class="landing-header">
 		<h1>PG Generator</h1>
-		<p>Scegli il tuo gioco</p>
+		<p class="intro">
+			Genera personaggi casuali completi per giochi di ruolo <strong>Mörk Borg-like</strong>.
+			Scegli il gioco:
+		</p>
 	</header>
 
 	<div class="choices">
@@ -53,12 +56,15 @@
 		color: var(--color-text);
 	}
 	.landing-header p {
-		font-family: var(--font-mono);
-		color: var(--color-text-dim);
-		text-transform: uppercase;
-		letter-spacing: 0.15em;
-		font-size: 0.75rem;
-		margin: var(--space-sm) 0 0;
+		font-family: var(--font-body);
+		color: var(--color-text-muted);
+		font-size: 1.05rem;
+		line-height: 1.5;
+		max-width: 46ch;
+		margin: var(--space-sm) auto 0;
+	}
+	.landing-header strong {
+		color: var(--color-text);
 	}
 	.choices {
 		display: grid;
