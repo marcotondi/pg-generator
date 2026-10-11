@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SectionHeading from '$lib/core/components/SectionHeading.svelte';
+	import StatBlock from '$lib/core/components/StatBlock.svelte';
 	import ItemList from '$lib/core/components/ItemList.svelte';
 	import Divider from '$lib/core/components/Divider.svelte';
 	import { it } from './engine/data/it';
@@ -26,6 +27,15 @@
 		<h3 class="class-name">{it(CLASS_I18N_KEYS[character.class])}</h3>
 	</div>
 
+	<div class="abilities-row">
+		{#each attributes as attr}
+			<StatBlock
+				label={attr.label}
+				value={attr.value >= 0 ? `+${attr.value}` : String(attr.value)}
+			/>
+		{/each}
+	</div>
+
 	<div class="stats-row">
 		<p><strong>PF</strong> {character.hitPoints}</p>
 		<p><strong>Virtù</strong> {character.virtues} ({character.virtuesDice})</p>
@@ -35,22 +45,12 @@
 
 	<Divider />
 
-	<div class="two-col">
-		<div class="col">
-			<SectionHeading text="Attributi" />
-			<p class="muted">{it(character.brokenBodies ?? '')}</p>
-			<p class="muted">{it(character.grimChronicles ?? '')}</p>
-			<p class="muted">{it(character.badHabits ?? '')}</p>
-			<p class="muted">{it(character.awfulAfflictions ?? '')}</p>
-		</div>
-		<div class="col">
-			<SectionHeading text="Abilità" />
-			<ItemList>
-				{#each attributes as attr}
-					<li>{attr.label}: {attr.value}</li>
-				{/each}
-			</ItemList>
-		</div>
+	<div class="attrs">
+		<SectionHeading text="Attributi" />
+		<p class="muted">{it(character.brokenBodies ?? '')}</p>
+		<p class="muted">{it(character.grimChronicles ?? '')}</p>
+		<p class="muted">{it(character.badHabits ?? '')}</p>
+		<p class="muted">{it(character.awfulAfflictions ?? '')}</p>
 	</div>
 
 	<Divider />
@@ -161,6 +161,15 @@
 		color: var(--color-accent);
 		margin: var(--space-xs) 0 0;
 		letter-spacing: 0.05em;
+	}
+	.abilities-row {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		margin: var(--space-lg) 0;
+	}
+	.attrs {
+		margin: var(--space-lg) 0;
 	}
 	.stats-row {
 		display: flex;
