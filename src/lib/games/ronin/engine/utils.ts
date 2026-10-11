@@ -1,6 +1,6 @@
 import { CharacterClass } from "./types";
 import type { Armor } from "./types";
-import { getArmorsByRoll } from "./i18n-armor";
+import { armorsByRoll } from "./i18n-armor";
 
 export type HonourState = "honourable" | "dishonourable" | "none";
 
@@ -34,13 +34,8 @@ export function getAbilityModifier(score: number): number {
 }
 
 export function determineArmorBasedOnRoll(roll: number): Armor {
-    const armorsByRoll = getArmorsByRoll();
     const tierArmors = armorsByRoll[roll];
-    if (tierArmors) {
-        return tierArmors[Math.floor(Math.random() * tierArmors.length)];
-    }
-    console.error("Invalid roll for armor:", roll);
-    return armorsByRoll[1][0];
+    return tierArmors[Math.floor(Math.random() * tierArmors.length)];
 }
 
 export function rollForEquipment(equipmentMap: Map<number, string>, selectedClass: CharacterClass): string {

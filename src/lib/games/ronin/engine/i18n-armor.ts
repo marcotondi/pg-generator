@@ -1,6 +1,7 @@
 import type { Armor } from "./types";
 
-export const getArmorsByRoll = (): { [key: number]: Armor[] } => ({
+/** Tabella armature per tiro: 1 = nessuna, 2 = Tier 1, 3 = Tier 2, 4 = Tier 3. */
+export const armorsByRoll: { [key: number]: Armor[] } = {
     1: [{ style: 'characterGenerator.armors.noArmour.style', tier: 0, description: 'characterGenerator.armors.noArmour.description' }],
     2: [
         { style: 'characterGenerator.armors.ashigaruArmour.style', tier: 1, description: 'characterGenerator.armors.ashigaruArmour.description' },
@@ -14,4 +15,4 @@ export const getArmorsByRoll = (): { [key: number]: Armor[] } => ({
         { style: 'characterGenerator.armors.oYoroi.style', tier: 3, description: 'characterGenerator.armors.oYoroi.description' },
         { style: 'characterGenerator.armors.haramaki.style', tier: 3, description: 'characterGenerator.armors.haramaki.description' },
     ],
-});
+};

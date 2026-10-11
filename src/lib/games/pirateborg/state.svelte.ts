@@ -1,5 +1,4 @@
 import { saveCharacter } from '$lib/core/storage';
-import type { SavedCharacter } from '$lib/core/types';
 import { generatePirate, type PirateCharacter } from './engine';
 
 export type { PirateCharacter };
@@ -50,7 +49,7 @@ export class PirateBorgState {
 		this.character = data;
 	}
 
-	save(): SavedCharacter<PirateCharacter> {
-		return saveCharacter('pirateborg', this.character.name, $state.snapshot(this.character));
+	save(): boolean {
+		return saveCharacter('pirateborg', this.character.name, $state.snapshot(this.character)) !== null;
 	}
 }

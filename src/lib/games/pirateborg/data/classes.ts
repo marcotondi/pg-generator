@@ -8,7 +8,6 @@ export interface ClassTraitTable {
 export interface PirateClass {
 	id: number;
 	name: string;
-	forbidsRituals?: boolean;
 	modifiers: Partial<Record<string, number>>;
 	hpDie: number;
 	devilLuck: string;
@@ -21,7 +20,6 @@ export const classes: PirateClass[] = [
 	{
 		id: 1,
 		name: 'Bruto',
-		forbidsRituals: true,
 		modifiers: { FORZA: 1, VIGORE: 1, PRESENZA: -1, SPIRITO: -1 },
 		hpDie: 12,
 		devilLuck: 'd2',

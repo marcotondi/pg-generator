@@ -25,9 +25,14 @@ function read(): SavedCharacter[] {
 	}
 }
 
-function write(list: SavedCharacter[]): void {
-	if (typeof localStorage === 'undefined') return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+function write(list: SavedCharacter[]): boolean {
+	if (typeof localStorage === 'undefined') return false;
+	try {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+		return true;
+	} catch {
+		return false;
+	}
 }
 
 /** Elenco di tutti i personaggi salvati, di entrambi i giochi, dal più recente. */
@@ -40,8 +45,8 @@ export function getCharacter(id: string): SavedCharacter | undefined {
 	return read().find((item) => item.id === id);
 }
 
-/** Salva un nuovo personaggio e ritorna l'elemento creato. */
-export function saveCharacter<T>(game: GameId, name: string, data: T): SavedCharacter<T> {
+/** Salva un nuovo personaggio e ritorna l'elemento creato, o null se lo storage è pieno/non disponibile. */
+export function saveCharacter<T>(game: GameId, name: string, data: T): SavedCharacter<T> | null {
 	const entry: SavedCharacter<T> = {
 		id: crypto.randomUUID(),
 		envelopeVersion: ENVELOPE_VERSION,
@@ -50,8 +55,7 @@ export function saveCharacter<T>(game: GameId, name: string, data: T): SavedChar
 		savedAt: Date.now(),
 		data
 	};
-	write([entry, ...read()]);
-	return entry;
+	return write([entry, ...read()]) ? entry : null;
 }
 
 /** Rimuove un personaggio salvato per id. */

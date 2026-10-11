@@ -1,5 +1,4 @@
 import { saveCharacter } from '$lib/core/storage';
-import type { SavedCharacter } from '$lib/core/types';
 import { generateCharacter } from './engine';
 import type { Character } from './engine/types';
 import type { HonourState } from './engine/utils';
@@ -26,9 +25,9 @@ export class RoninState {
 		this.character = data;
 	}
 
-	save(): SavedCharacter<Character> | null {
-		if (!this.character) return null;
+	save(): boolean {
+		if (!this.character) return false;
 		const snapshot = $state.snapshot(this.character) as Character;
-		return saveCharacter('ronin', `${snapshot.firstName} ${snapshot.lastName}`, snapshot);
+		return saveCharacter('ronin', `${snapshot.firstName} ${snapshot.lastName}`, snapshot) !== null;
 	}
 }

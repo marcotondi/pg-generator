@@ -18,15 +18,15 @@
 		meta: GameMeta;
 		hasCharacter: boolean;
 		generate: () => void;
-		save: () => void;
+		save: () => boolean;
 		controls?: Snippet;
 		header?: Snippet;
 		sheet: Snippet;
 	} = $props();
 
 	function onSave() {
-		save();
-		toast.show('Personaggio salvato!');
+		const ok = save();
+		toast.show(ok ? 'Personaggio salvato!' : 'Memoria piena: salvataggio non riuscito');
 	}
 </script>
 
