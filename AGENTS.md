@@ -33,5 +33,4 @@
 
 ## Riferimenti
 
-- `docs/ronin-ui-spec.md` — aspetto della UI Rōnin da preservare nel port
 - `openspec/` — proposal, specs, design e task del progetto
