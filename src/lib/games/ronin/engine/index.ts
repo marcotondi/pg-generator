@@ -4,12 +4,12 @@ import {
 } from './constants';
 import { CLASSES, classFeatures } from './data/classes';
 import { nicknames } from './data/nicknames';
-import { carryMap, equipmentMap, startingWeaponsMap } from './data/equipment';
+import { carryMap, equipmentMap } from './data/equipment';
 import { unseenTextsMap, shintaiTextsMap } from './data/texts';
 import { brokenBodiesMap, grimChroniclesMap, badHabitsMap, awfulAfflictionsMap } from './data/flaws';
 import { it } from './data/it';
 import { CharacterClass } from './types';
-import type { Character, Abilities, Weapon, Armor, Modifiers } from './types';
+import type { Character, Abilities, Armor, Modifiers } from './types';
 import { getRandomItem, rollDice, getAbilityModifier, determineArmorBasedOnRoll, rollForEquipment } from './utils';
 import type { HonourState } from './utils';
 
@@ -19,17 +19,18 @@ function rollAbilities(classMods: Modifiers, honourState: HonourState): Abilitie
         spirit: getAbilityModifier(rollDice(3, 6, honourState) + classMods.spirit),
         vigor: getAbilityModifier(rollDice(3, 6, honourState) + classMods.vigor),
         resilience: getAbilityModifier(rollDice(3, 6, honourState) + classMods.resilience),
-        honour: rollDice(3, 6, honourState) + classMods.honour,
+        honour: rollDice(3, 6) + classMods.honour,
     };
 }
 
-function rollArmor(selectedClass: CharacterClass, hasSpecialEquipment: boolean, honourState: HonourState): Armor {
-    if (selectedClass === CharacterClass.EruditeSamurai) {
+function rollArmor(selectedClass: CharacterClass, hasText: boolean, honourState: HonourState): Armor {
+    // Un Testo non funziona con armatura Media o Pesante: chi ne ha uno resta a Tier 0-1.
+    if (hasText) {
+        return determineArmorBasedOnRoll(rollDice(1, 2, honourState));
+    } else if (selectedClass === CharacterClass.EruditeSamurai) {
         return determineArmorBasedOnRoll(3);
     } else if (selectedClass === CharacterClass.SwordSaint) {
         return determineArmorBasedOnRoll(4);
-    } else if (hasSpecialEquipment) {
-        return determineArmorBasedOnRoll(rollDice(1, 2, honourState));
     } else {
         return determineArmorBasedOnRoll(rollDice(1, 4, honourState));
     }
@@ -42,11 +43,6 @@ function rollFlaws(honourState: HonourState) {
         badHabits: badHabitsMap.get(rollDice(1, 20, honourState)),
         awfulAfflictions: awfulAfflictionsMap.get(rollDice(1, 20, honourState)),
     };
-}
-
-function rollForStartingWeapon(honourState: HonourState): Weapon | undefined {
-    const weaponRoll = rollDice(1, startingWeaponsMap.size, honourState);
-    return startingWeaponsMap.get(weaponRoll);
 }
 
 export function generateCharacter(honourState: HonourState = "none"): Character {
@@ -71,14 +67,15 @@ export function generateCharacter(honourState: HonourState = "none"): Character 
     equipment.push(`${water} ${it('characterGenerator.equipment.water')}`);
 
     const hasSpecialEquipment = randomEquipment === 'characterGenerator.equipmentMap.unseenText';
-    const armor = rollArmor(selectedClass, hasSpecialEquipment, honourState);
+    const classHasText =
+        selectedClass === CharacterClass.Yamabushi || selectedClass === CharacterClass.Onmyoji;
+    const armor = rollArmor(selectedClass, hasSpecialEquipment || classHasText, honourState);
 
     const featureRoll = rollDice(1, 6, honourState);
     const selectedFeature = classFeatures[selectedClass].features.get(featureRoll);
     const flaws = rollFlaws(honourState);
 
     const classWeapons = [...classFeatures[selectedClass].weapons];
-    const randomStartingWeapon = rollForStartingWeapon(honourState);
 
     const character: Character = {
         class: selectedClass,
@@ -102,10 +99,6 @@ export function generateCharacter(honourState: HonourState = "none"): Character 
         awfulAfflictions: flaws.awfulAfflictions,
     };
 
-    if (randomStartingWeapon) {
-        character.classWeapons.push(randomStartingWeapon);
-    }
-
     if (randomEquipment === 'characterGenerator.equipmentMap.unseenText') {
         equipment.push(it('characterGenerator.equipmentMap.unseenText'));
         const unseenTextKey = rollDice(1, unseenTextsMap.size, honourState);
@@ -114,15 +107,7 @@ export function generateCharacter(honourState: HonourState = "none"): Character 
             character.unseenText = unseenText;
         }
     } else {
-        const translatedItem = it(randomEquipment);
-        if (randomEquipment === 'characterGenerator.equipmentMap.firecrackers' ||
-            randomEquipment === 'characterGenerator.equipmentMap.healersKits' ||
-            randomEquipment === 'characterGenerator.equipmentMap.snakeVenomShuriken') {
-            const quantity = rollDice(1, 4, honourState);
-            equipment.push(translatedItem.replace("4", quantity.toString()));
-        } else {
-            equipment.push(translatedItem);
-        }
+        equipment.push(it(randomEquipment));
     }
 
     if (selectedClass === CharacterClass.Yamabushi) {
