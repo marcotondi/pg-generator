@@ -18,10 +18,10 @@ Ogni personaggio salvato SHALL usare un formato comune `{ version, game, data }`
 - **ALLORA** DEVE conoscere il gioco di ciascuno senza doverlo dedurre dai dati interni
 
 ### Requirement: L'elenco SHALL mostrare i personaggi di entrambi i giochi
-Un menu di richiamo accessibile dalle pagine gioco SHALL elencare i personaggi salvati di entrambi i giochi, aggiornandosi a ogni apertura, e SHALL indicare il gioco di ciascun elemento.
+Un pannello accessibile dalla barra di navigazione SHALL elencare i personaggi salvati di entrambi i giochi, aggiornandosi a ogni apertura, e SHALL indicare il gioco di ciascun elemento.
 
 #### Scenario: Elenco unificato
-- **QUANDO** l'utente apre il menu dopo aver salvato personaggi di entrambi i giochi
+- **QUANDO** l'utente apre il pannello dopo aver salvato personaggi di entrambi i giochi
 - **ALLORA** DEVE vedere entrambi i personaggi, ciascuno con l'indicazione del gioco
 
 ### Requirement: Il caricamento SHALL ripristinare la scheda
