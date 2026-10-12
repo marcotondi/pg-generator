@@ -24,19 +24,22 @@ function git(args) {
  */
 export function getVersion() {
 	try {
-		const described = git(['describe', '--tags', '--long', '--dirty', '--always', '--match', 'v*']);
-		const tagged = /^v(\d+)\.(\d+)\.(\d+)-(\d+)-g([0-9a-f]+)(-dirty)?$/.exec(described);
-		const dirty = described.endsWith('-dirty') ? '.dirty' : '';
+		// Match esatto sulla forma vMAJOR.MINOR.PATCH: un tag qualsiasi (es. v9zzz) non deve diventare la base.
+		const described = git(['describe', '--tags', '--long', '--dirty', '--always', '--match', 'v[0-9]*.[0-9]*.[0-9]*']);
+		const isDirty = described.endsWith('-dirty');
+		const cleanDesc = isDirty ? described.slice(0, -6) : described;
+		const dirtySuffix = isDirty ? '+dirty' : '';
+		const tagged = /^v(\d+)\.(\d+)\.(\d+)-(\d+)-g([0-9a-f]+)$/.exec(cleanDesc);
 
 		if (!tagged) {
 			const count = git(['rev-list', '--count', 'HEAD']);
 			const sha = git(['rev-parse', '--short', 'HEAD']);
-			return `0.1.0-${count}.g${sha}${dirty}`;
+			return `0.1.0-dev.${count}.g${sha}${dirtySuffix}`;
 		}
 
 		const [, major, minor, patch, count, sha] = tagged;
-		if (count === '0') return `${major}.${minor}.${patch}${dirty ? '-dirty' : ''}`;
-		return `${major}.${minor}.${Number(patch) + 1}-${count}.g${sha}${dirty}`;
+		if (count === '0') return `${major}.${minor}.${patch}${dirtySuffix}`;
+		return `${major}.${minor}.${Number(patch) + 1}-dev.${count}.g${sha}${dirtySuffix}`;
 	} catch {
 		return JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
 	}

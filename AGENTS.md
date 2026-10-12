@@ -27,7 +27,7 @@
 - Contenuto italiano raccolto nel modulo `data/` di ogni gioco. Rōnin usa un dizionario `it.ts` con resolver `it(key)` perché i dati sorgente erano a chiavi; PirateBorg ha già stringhe italiane dirette.
 - **Personaggio di sola lettura**: la scheda non ha campi modificabili; si rigenera dal pulsante.
 - Motori di gioco in TS puro: non importano Svelte, sono testabili a parte.
-- `.editorconfig` specifica **CRLF** come fine riga.
+- `.editorconfig` specifica **LF** come fine riga.
 - Non ripristinare componenti/pattern dai progetti Next/React precedenti: il port è in Svelte.
 - Cambi di comportamento passano da OpenSpec: `openspec/changes/`.
 
