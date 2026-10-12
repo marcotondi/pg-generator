@@ -2,7 +2,6 @@
 	import type { Snippet } from 'svelte';
 	import type { GameMeta } from '../types';
 	import Navbar from './Navbar.svelte';
-	import pkg from '../../../../package.json';
 
 	let { meta, children }: { meta: GameMeta; children: Snippet } = $props();
 </script>
@@ -18,7 +17,7 @@
 		<footer class="app-footer">
 			<p class="license-text">{meta.license}</p>
 			<p class="version-text">
-				v{pkg.version} · <a href={meta.repoUrl} target="_blank" rel="noopener">GitHub</a>
+				v{__APP_VERSION__} · <a href={meta.repoUrl} target="_blank" rel="noopener">GitHub</a>
 			</p>
 		</footer>
 	</div>
