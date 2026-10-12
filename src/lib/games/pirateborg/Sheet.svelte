@@ -32,7 +32,7 @@
 		</div>
 		<div class="vital-block">
 			<span class="vital-label">Fortuna</span>
-			<span class="vital-value">d{character.devilLuck}</span>
+			<span class="vital-value">{character.devilLuck}</span>
 		</div>
 	</div>
 
